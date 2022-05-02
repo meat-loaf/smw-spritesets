@@ -1,0 +1,40 @@
+ 100 - Koopas pt 1
+ 101 - Koopas pt 2
+*102 - fish
+*103 - rex
+*104 - cave 1 (buzzy beetle, swooper)
+*105 - blaaaargg
+*106 - eeries, fishin' boo
+*107 - chargin/clappin/whistlin chuck pt 1
+*108 - chargin/clappin/whistlin chuck pt 2
+*109 - pitchin/puntin' chuck specific tiles; football, baseball
+ 10A - diggin' chuck specific tiles, diggin' chuck's rock
+*10B - Monty mole, pokey
+*10C - Banzai Bill pt. 1
+*10D - Banzai Bill pt. 2
+*10E - Carrot plats
+ 10F - Mega Mole
+ 110 - piranhas, goombas, other things demoted from SP1
+ 111 - athletic platforms, on/off bounce block, goal sphere
+ 112 - rope/saw machine, fuzzy
+ 113 - urchin, blurp fish
+*114 - dolphins
+ 115 - torpedo ted
+*116 - porcu-puffer
+ 117 - rip van fish
+*118 - dry bones, reflecting fireball
+*119 - dry bones' bones, bony beetle, pencil
+*11A - spike top, skull raft
+ 11B - wiggler, hoppin' fire
+*11C - Big Boo 1/stinky bubble
+*11D - Big Boo 2
+*11E - boos/boo block/boo ring/boo ceiling/appearing boos
+*11F - spiny, lakitu
+*120 - thwomp, thwimp, bone fish, falling spike
+*121 - net koopas
+*122 - castle block, grinders, ball n chain
+*123 - magikoopa, castle bg flames
+ 124 - bowser statue, hothead
+ 125 - tbd
+ 126 - volcano lotus, super koopa
+ 127 - bullet bills

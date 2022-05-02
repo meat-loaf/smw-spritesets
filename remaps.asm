@@ -1,0 +1,58 @@
+; normal sprite remaps
+incsrc "remaps/ballnchain.asm"
+incsrc "remaps/banzai_bill.asm"
+incsrc "remaps/big_boo.asm"
+incsrc "remaps/blargg.asm"
+incsrc "remaps/boo_booblock.asm"
+incsrc "remaps/bullet_bills.asm"
+incsrc "remaps/buzzy_beetle.asm"
+incsrc "remaps/carrot_top.asm"
+incsrc "remaps/castle_block.asm"
+incsrc "remaps/chucks.asm"
+incsrc "remaps/climbing_koopas.asm"
+incsrc "remaps/coingame.asm"                  ; TODO figure out how to handle the coin inheritance
+incsrc "remaps/dolphins.asm"
+incsrc "remaps/dry_bones_bony_beetle.asm"
+incsrc "remaps/eerie.asm"
+incsrc "remaps/falling_spike.asm"
+incsrc "remaps/fish.asm"
+incsrc "remaps/fishbone.asm"
+incsrc "remaps/fishin_boo.asm"
+incsrc "remaps/football.asm"
+incsrc "remaps/goomba.asm"
+incsrc "remaps/grinders.asm"
+incsrc "remaps/koopas.asm"
+incsrc "remaps/lakitu.asm"
+incsrc "remaps/magikoopa.asm"
+incsrc "remaps/messagebox.asm"
+incsrc "remaps/monty_mole.asm"
+incsrc "remaps/pencil.asm"
+incsrc "remaps/piranhas.asm"
+incsrc "remaps/pokey.asm"
+incsrc "remaps/porcu_puffer.asm"
+incsrc "remaps/reflecting_fireball.asm"
+incsrc "remaps/rex.asm"
+incsrc "remaps/skull_plat.asm"
+incsrc "remaps/spike_top.asm"
+incsrc "remaps/spiny.asm"
+incsrc "remaps/stinky_bubble.asm"
+incsrc "remaps/super_koopa.asm"               ; TODO not completed, buggy frames
+incsrc "remaps/swooper.asm"
+incsrc "remaps/thwimp.asm"
+incsrc "remaps/thwomp.asm"
+incsrc "remaps/timed_plat.asm"
+incsrc "remaps/volcano_lotus.asm"
+incsrc "remaps/wood_checker_plats.asm"
+
+; cluster sprite remaps
+incsrc "remaps/cls_boos.asm"
+incsrc "remaps/cls_castle_bg_flame.asm"
+
+; extended sprite remaps
+incsrc "remaps/ext_baseball.asm"
+incsrc "remaps/ext_bone.asm"
+incsrc "remaps/ext_coingame_coin.asm"
+incsrc "remaps/ext_lotus_pollen.asm"
+
+; minor extended sprite remaps
+incsrc "remaps/mex_boostream.asm"             ; TODO
