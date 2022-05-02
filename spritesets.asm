@@ -113,7 +113,7 @@ else
 endif
 
 macro getdrawinfo_hijack(scratch, return)
-	STA.b $01|!dp
+	STA.b $01
 	LDA   !spriteset_offset,x
 	STA   <scratch>
 	<return>
@@ -147,25 +147,25 @@ endmacro
 ; (this is mostly used when sprites spawn a sprite type)
 macro nonstandard_sprset_init(snum_table, off_table, on_wram_mirror, sprset_table, current_sprite_ram, return)
 	LDA.b #bank(<sprset_table>)
-	STA.b $8C|!dp
+	STA.b $8C
 
-	STY.b $8D|!dp             ; slot backup
+	STY.b $8D                 ; slot backup
 	LDA.w <snum_table>,y
 	ASL                       ; a = sprite number << 2
 	TAX                       ; x = sprite number << 2
 	LDA.l <sprset_table>,x
-	STA.b $8A|!dp
+	STA.b $8A
 	LDA.l <sprset_table>+1,x
-	STA.b $8B|!dp
+	STA.b $8B
 	LDY   !current_spriteset
 	LDA.b [$8A],y             ; a = tile offset for sprite
   if <on_wram_mirror> == 0
-	LDX.b $8D|!dp             ; x = sprite slot
+	LDX.b $8D                 ; x = sprite slot
 	STA.l <off_table>,x
 	TXY
 	LDX <current_sprite_ram>
   else
-	LDY $8D|!dp               ; y = sprite slot
+	LDY $8D                   ; y = sprite slot
 	STA <off_table>,x
 	LDX <current_sprite_ram>
   endif
@@ -189,47 +189,47 @@ autoclean \
 ; subspr gfx 0 optimization
 org $019CFC|!bank
 	; saves a byte, originally LDY/TYA for no discernable reason
-	LDA.b $0F|!dp
+	LDA.b $0F
 	CLC
-	ADC.b $01|!dp
-	STA.b $01|!dp
+	ADC.b $01
+	STA.b $01
 	LDY   !9E,x
 	LDA.w !1602,x
 	ASL   #2
 	ADC.w $019C7F|!bank,y
-	STA.b $02|!dp
+	STA.b $02
 	LDA.w !15F6,x
-	ORA.b $64|!dp
+	ORA.b $64
 	STA.b $03
 	LDY.w !15EA,x
 	LDA.b #$03
-	STA.b $04|!dp
+	STA.b $04
 subspr_gfx0_drawloop:
 	; move tile store up: skip carry clear due to ASL above, and
 	; ASL for props after should ensure its clear on loop iters)
-	LDA.b $02|!dp
-	ADC.b $04|!dp
+	LDA.b $02
+	ADC.b $04
 	TAX
 	LDA.w $019B83|!bank,x
 	ADC.b !tile_off_scratch
-	LDX.b $04|!dp
+	LDX.b $04
 	STA.w $0302|!addr,y
-	LDA.b $00|!dp
+	LDA.b $00
 	ADC.w $019CD3|!bank,x
 	STA.w $0300|!addr,y
-	LDA.b $01|!dp
+	LDA.b $01
 	CLC
 	ADC $019CD7|!bank,x
 	STA $0301|!addr,y
-	LDA.b $05|!dp
+	LDA.b $05
 	ASL   #2
-	ADC.b $04|!dp
+	ADC.b $04
 	TAX
 	LDA.w $019CDB|!bank,x
-	ORA.b $03|!dp
+	ORA.b $03
 	STA.w $0303|!addr,y
 	INY #4
-	DEC.b $04|!dp
+	DEC.b $04
 	BPL subspr_gfx0_drawloop
 	LDX.w $15E9|!addr
 	LDA.b #$03
@@ -244,7 +244,7 @@ SubSprGFX1:
 	; get draw info
 	JSR.w $01A365|!bank
 	LDA.w !15F6,x
-	STA.b $02|!dp
+	STA.b $02
 	LDA   !9E,x
 	CMP.b #$0F
 	BCS .nostdsprite
@@ -252,7 +252,7 @@ SubSprGFX1:
 	; assigned oam slot, apparently
 	INY #4
 .nostdsprite
-	STY.b $05|!dp
+	STY.b $05
 	LDY   !9E,x
 	LDA.w !1602,x
 	ASL
@@ -262,31 +262,31 @@ SubSprGFX1:
 	; generic sprite routine: sprite tiles
 	LDA.w spr_tiles,x
 	ADC.b !tile_off_scratch
-	STA.b $03|!dp
+	STA.b $03
 	LDA.w spr_tiles+1,x
 	ADC.b !tile_off_scratch
-	STA.b $04|!dp
+	STA.b $04
 	LDX.w $15E9|!addr
-	LDY.b $05|!dp
-	LDA.b $02|!dp
+	LDY.b $05
+	LDA.b $02
 	BPL.b .rightside_up
-	LDA.b $03|!dp
+	LDA.b $03
 	STA.w $0306|!addr,y
-	LDA.b $04|!dp
+	LDA.b $04
 	STA.w $0302|!addr,y
 	BRA.b .tile_done
 .rightside_up
-	LDA.b $03|!dp
+	LDA.b $03
 	STA.w $0302|!addr,y
-	LDA.b $04|!dp
+	LDA.b $04
 	STA.w $0306|!addr,y
 .tile_done
-	LDA.b $01|!dp
+	LDA.b $01
 	STA.w $0301|!addr,y
 	CLC
 	ADC.b #$10
 	STA.w $0305|!addr,y
-	LDA.b $00|!dp
+	LDA.b $00
 	STA.w $0300|!addr,y
 	STA.w $0304|!addr,y
 	LDA.w !157C,x
@@ -296,7 +296,7 @@ SubSprGFX1:
 	BCS .face_other_side
 	ORA.b #$40
 .face_other_side
-	ORA.b $64|!dp
+	ORA.b $64
 	STA.w $0303|!addr,y
 	STA.w $0307|!addr,y
 	TYA
@@ -316,12 +316,12 @@ org $019F27|!bank
 	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	LDX.w $15E9|!addr
-	LDA.b $00|!dp
+	LDA.b $00
 	STA.w $0300|!addr,y
-	LDA.b $01|!dp
+	LDA.b $01
 	STA.w $0301|!addr,y
 	; saves a byte (1/2): stored earlier but this routine just reloaded from the table?
-	LDA.b $02|!dp
+	LDA.b $02
 	LSR
 	LDA.b #$00
 	ORA.w !15F6,x
@@ -395,12 +395,12 @@ if !cluster_sprites_inherit_parent
 	JML sprset_cluster_init_inherit
 else
 	STA $1892|!addr,x
-	STX.b $8E|!dp
-	STY.b $8F|!dp
+	STX.b $8E
+	STY.b $8F
 	TXY
 	JSL cls_sprset_init
-	LDX.b $8E|!dp
-	LDY.b $8F|!dp
+	LDX.b $8E
+	LDY.b $8F
 endif
 .init_done              ; if inheriting is enabled, we jump back here.
 	RTS
@@ -479,7 +479,7 @@ sprset_init:
 	PHX
 
 	LDA.b #spritesets>>16
-	STA.b $8C|!dp
+	STA.b $8C
 
 if !pixi_installed
 	LDA   !extra_bits,x
@@ -501,7 +501,7 @@ endif
 	TAX
 	LDA.l spriteset_off_ptrs,x
 .custom_done
-	STA.b $8A|!dp
+	STA.b $8A
 	SEP #$30
 	LDY   !current_spriteset
 	LDA.b [$8A],y
@@ -513,23 +513,23 @@ endif
 if !cluster_sprites_inherit_parent
 sprset_cluster_init_inherit:
 	STA $1892|!addr,x
-	STX.b $8D|!dp
+	STX.b $8D
 	TAX
 	LDA.b #spriteset_off_ptrs>>16
-	STA.b $8C|!dp
+	STA.b $8C
 	LDA.l .cluster_inherit_map-3,x
 	REP.b #$30
 	AND.w #$00FF
 	ASL
 	TAX
 	LDA.l spriteset_off_ptrs,x
-	STA.b $8A|!dp
+	STA.b $8A
 	SEP #$30
 	TYX
 	LDY   !current_spriteset
 	LDA.b [$8A],y
 	TXY
-	LDX.b $8D|!dp
+	LDX.b $8D
 	STA   !cls_spriteset_offset,x
 	JML.l cluster_spawn_bank2_init_done
 ; boo ceiling, boo ring, castle flames,
@@ -561,7 +561,7 @@ endif
 spriteset_setup:
 	LDX #$07           ; \
 .loop:                     ; | restore hijacked code
-	LDA.b $1A|!dp,x    ; |
+	LDA.b $1A,x        ; |
 	STA $1462|!addr,x  ; |
 	DEX                ; |
 	BPL .loop          ; /
