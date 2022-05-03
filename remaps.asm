@@ -42,7 +42,9 @@ incsrc "remaps/thwimp.asm"
 incsrc "remaps/thwomp.asm"
 incsrc "remaps/timed_plat.asm"
 incsrc "remaps/volcano_lotus.asm"
+incsrc "remaps/wiggler.asm"                   ; TODO not done, graphics routine needs a work to be up to snuff
 incsrc "remaps/wood_checker_plats.asm"
+incsrc "remaps/wood_spinny_plat.asm"
 
 ; cluster sprite remaps
 incsrc "remaps/cls_boos.asm"
@@ -55,4 +57,4 @@ incsrc "remaps/ext_coingame_coin.asm"
 incsrc "remaps/ext_lotus_pollen.asm"
 
 ; minor extended sprite remaps
-incsrc "remaps/mex_boostream.asm"             ; TODO
+incsrc "remaps/mex_boostream.asm"

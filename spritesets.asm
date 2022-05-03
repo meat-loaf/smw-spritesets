@@ -17,6 +17,10 @@
 !remap_message_box        = 1
 !remap_coingame_stuffs    = 1 ; (TODO) coin game cloud coin
 
+; the rotating brown platform is a funny sprite, and has some
+; slightly special handling...its a lot easier to put this here.
+!brown_plat_ball_tile_num = $04
+
 ; with these settings enabled, the relevant sprite type
 ; will inherit the tile offset from the normal sprite that is
 ; spawning it, avoiding the table lookup completely. This is
@@ -86,6 +90,10 @@ incsrc "sa1def.asm"
 
 ; This needs to be on direct page, it's best not to change it.
 !tile_off_scratch         = $5A
+; a small amount of sprites will precalculate a certain tile
+; before storing. Currently, only the brown spinning platform
+; does this.
+!precalc_single_scratch   = $45
 
 ; check if spriteset offset table can use y-indexing and stz
 if bank(!spriteset_offset) == bank(!extram_bank)
@@ -111,6 +119,13 @@ if bank(!mex_spriteset_offset) == bank(!extram_bank)
 else
 	!mex_off_on_wram_mirror = 1
 endif
+
+macro replace_wide_pointer(old, new)
+pushpc
+org <old>
+dw <new>
+pullpc
+endmacro
 
 macro getdrawinfo_hijack(scratch, return)
 	STA.b $01
@@ -185,6 +200,8 @@ autoclean \
 	warnpc $009705|!bank
 
 ;; bank 01 hijacks ;;
+; replace brown spinning platform main, it doesnt call getdrawinfo
+%replace_wide_pointer($01868A|!bank,brown_plat_main)
 
 ; subspr gfx 0 optimization
 org $019CFC|!bank
@@ -307,7 +324,16 @@ SubSprGFX1:
 	STA.w $0460|!addr,y
 	STA.w $0461|!addr,y
 	JMP.w $01A3DF|!bank
-; 33 bytes freed
+brown_plat_main:
+	LDA   !spriteset_offset,x
+	STA.b !tile_off_scratch
+	CLC
+	ADC #!brown_plat_ball_tile_num
+	STA.b !precalc_single_scratch
+	; the original main
+	JMP.w $01C773|!bank
+; 14/13 bytes freed (depending on width of !spriteset_offset)
+print pc
 warnpc $019E0D|!bank
 
 ; subsprgfx 2 optimization

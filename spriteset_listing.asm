@@ -101,7 +101,7 @@ endif
 	dw spritesets_wood_checkered_plats    ; sprite 5C - checkered platform, floats
 	dw spritesets_null_spriteset          ; sprite 5D
 	dw spritesets_null_spriteset          ; sprite 5E
-	dw spritesets_null_spriteset          ; sprite 5F
+	dw spritesets_wood_checkered_plats    ; sprite 5F - brown platform on chain (moves when mario stands on it)
 	dw spritesets_null_spriteset          ; sprite 60
 	dw spritesets_spiketop_raft           ; sprite 61 - skull raft
 	dw spritesets_wood_checkered_plats    ; sprite 62 - brown line guided platform (starts on its own)
