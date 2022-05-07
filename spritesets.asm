@@ -1,3 +1,10 @@
+; hijack Lunar Magic's graphics upload to do the spriteset upload handling
+; there, instead. As with all lunar magic hijacks, this can break between
+; lunar magic versions if FuSoYa decides to change this code for any reason.
+; If this hijack proves troublesome, disable this and use the provided
+; uberasm gm13 hijack instead.
+!hijack_lm_code           = 1
+
 ; defines for a handful of remaps for things originally on sp1/2
 ; moving some of them can reduce sp1/2 pressure for something like
 ; a sprite status bar, if desired.
@@ -95,6 +102,11 @@ incsrc "sa1def.asm"
 ; does this.
 !precalc_single_scratch   = $45
 
+if !SA1
+; same as in sa1's moresprites.asm
+!sprite_num_cache         = $87
+endif
+
 ; check if spriteset offset table can use y-indexing and stz
 if bank(!spriteset_offset) == bank(!extram_bank)
 	!spriteset_off_on_wram_mirror = 0
@@ -119,6 +131,14 @@ if bank(!mex_spriteset_offset) == bank(!extram_bank)
 else
 	!mex_off_on_wram_mirror = 1
 endif
+
+macro sprite_num(operation, index)
+if not(!SA1)
+	<operation>.b $9E,<index>
+else
+	<operation>.b !sprite_num_cache
+endif
+endmacro
 
 macro replace_wide_pointer(old, new)
 pushpc
@@ -192,12 +212,32 @@ endmacro
 ; hijack gamemode 11 to do spriteset graphics upload
 ; note: uberasm's hijack is too late to do this, as sprite inits have already run.
 org $0096F8|!bank
+if !hijack_lm_code == 0
         ; original music upload routine
 	; TODO check if amk hijacks here
 	JSR.w $008134|!bank
 autoclean \
-	JML spriteset_setup
+	JML spriteset_setup_nolm
 	warnpc $009705|!bank
+else
+restore:
+	LDX #$07           ; \
+.loop:                     ; | restore original code
+	LDA.b $1A,x        ; |
+	STA $1462|!addr,x  ; |
+	DEX                ; |
+	BPL .loop          ; /
+	JSR.w $008134|!bank
+	warnpc $009705|!bank
+
+if read1($0FF8C6|!bank) != $22
+	error "LM Super GFX hijack not installed, or this code has changed. Install this hijack first before patching with LM hijacks."
+endif
+; orignally, a call to the LM code that decompresses graphics files after
+; pulling the graphics file number from a long pointer at $8A
+org $0FF8C6|!bank
+	JSL.l spriteset_setup_lm
+endif
 
 ;; bank 01 hijacks ;;
 ; replace brown spinning platform main, it doesnt call getdrawinfo
@@ -210,7 +250,8 @@ org $019CFC|!bank
 	CLC
 	ADC.b $01
 	STA.b $01
-	LDY   !9E,x
+;	LDY   !9E,x
+	%sprite_num(LDY,x)
 	LDA.w !1602,x
 	ASL   #2
 	ADC.w $019C7F|!bank,y
@@ -262,7 +303,8 @@ SubSprGFX1:
 	JSR.w $01A365|!bank
 	LDA.w !15F6,x
 	STA.b $02
-	LDA   !9E,x
+;	LDA   !9E,x
+	%sprite_num(LDA,x)
 	CMP.b #$0F
 	BCS .nostdsprite
 	; standard sprites with wings use the first
@@ -270,7 +312,8 @@ SubSprGFX1:
 	INY #4
 .nostdsprite
 	STY.b $05
-	LDY   !9E,x
+	;LDY   !9E,x
+	%sprite_num(LDY,x)
 	LDA.w !1602,x
 	ASL
 	; generic sprite routine: tilemap offsets
@@ -485,7 +528,8 @@ org $07F78B|!bank
 ; instead of JSLing to the routine like the game originally did.
 load_sprite_tables:
 	PHX
-	LDA   !9E,x
+;	LDA   !9E,x
+	%sprite_num(LDA,x)
 	TAX
 	LDA.l $07F3FE,x
 	AND.b #$0F
@@ -520,7 +564,8 @@ if !pixi_installed
 	BRA.b .custom_done
 endif
 .notcustom:
-	LDA !9E,x
+;	LDA !9E,x
+	%sprite_num(LDA,x)
 	REP #$30
 	AND #$00FF
 	ASL
@@ -584,7 +629,8 @@ endif
 ;print "ExtendedSprteSprsetInit = $", pc
 ;mext_sprset_init: ; todo macro?
 
-spriteset_setup:
+if !hijack_lm_code == 0
+spriteset_setup_nolm:
 	LDX #$07           ; \
 .loop:                     ; | restore hijacked code
 	LDA.b $1A,x        ; |
@@ -598,6 +644,80 @@ spriteset_setup:
 	STA   !current_spriteset
 	SEP.b #$10
 	JML.l $009705|!bank
+else
+; since this runs in gamemode 12, sprites that are on screen when the level
+; loads (in gamemode 11) need their tile offsets actually set up.
+fix_sprites:
+	SEP.b #$30
+	LDX.b #!num_sprites-1
+.loop:
+	LDA.w !14C8,x
+	BEQ.b .next
+	JSL.l sprset_init
+.next:
+	DEX
+	BPL.b .loop
+	REP.b #$10
+	BRA.b spriteset_setup_lm_skip_set_spriteset
+; AXY are 16 bit here. $8A contains the pointer to the current ExGFX number to be loaded.
+; We will use the lower 8 bits of the SP3 ExGFX file number as the spriteset number.
+spriteset_setup_lm:
+	PHX : PHY : PHA : PHP
+	SEP.b #$20
+	LDA.w $0100|!addr
+	CMP.b #$12
+	BNE.b .skip
+	CPY.w #$0012          ; SP3 index
+	BEQ.b .set_spriteset_and_upload
+	CPY.w #$0010          ; SP4 index
+	BEQ.b fix_sprites
+	; if neither, fall through to original code (decomp gfx)
+.skip:
+	PLP : PLA : PLY : PLX
+	JML.l $0FF900|!bank
+.set_spriteset_and_upload:
+	; already have 8-bit A here
+	; low byte of graphics file number (only used for SP3)
+	LDA.b [$8A],y
+	STA   !current_spriteset
+.skip_set_spriteset:
+	TYX
+	LDY.w #$0003
+	LDA !current_spriteset
+	REP.b #$20
+	AND.w #$00FF
+	ASL   #4
+	CLC
+	; x will be 0012 or 0010 here
+	; the result is an index into the graphics table
+	; based on the spriteset number
+	ADC.l .indexes-$10,x
+	TAX
+.loop:
+	LDA.l spriteset_gfx_listing,x
+	; decomp gfx
+	JSL.l $0FF900|!bank
+	LDA.b $00
+	CLC
+	; 1KB file
+	ADC.w #$0400
+	; NOTE: technically we should check for needing to inc the high byte here,
+	; but I don't think thats a realistic scenario (default ram is 7EAD00,
+	; unlikely to ever change nor be near the bank border as thats where the map16
+	; data goes...).
+	STA.b $00
+	DEX : DEX
+	DEY
+	BPL.b .loop
+
+	LDA.w #$AD00      ; \ restore original upload destination
+	STA.b $00         ; / (unsure when this is actually set)
+	PLP : PLA : PLY : PLX
+	RTL
+.indexes
+	dw $0006,$000E
+
+endif
 
 incsrc "spriteset_listing.asm"
 

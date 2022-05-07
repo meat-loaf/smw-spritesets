@@ -37,4 +37,5 @@
  124 - bowser statue, hothead
  125 - tbd
  126 - volcano lotus, super koopa
- 127 - bullet bills
+*127 - bullet bills
+*128 - rock/grass platforms
