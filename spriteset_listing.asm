@@ -80,27 +80,22 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 4C
 	dw spritesets_monty_mole_pokey        ; sprite 4D - ground monty mole
 	dw spritesets_monty_mole_pokey        ; sprite 4E - ledge monty mole
-if !remap_jumpin_pplant_vine
 	dw spritesets_piranhas                ; sprite 4F - jumpin' piranha plant
 	dw spritesets_piranhas                ; sprite 50 - jumpin' piranha plant, spits fire
-else
-	dw spritesets_null_spriteset          ; sprite 4F - jumpin' piranha plant
-	dw spritesets_null_spriteset          ; sprite 50 - jumpin' piranha plant, spits fire
-endif 
 	dw spritesets_null_spriteset          ; sprite 51
 	dw spritesets_null_spriteset          ; sprite 52
 	dw spritesets_null_spriteset          ; sprite 53
 	dw spritesets_null_spriteset          ; sprite 54
 	dw spritesets_wood_checkered_plats    ; sprite 55 - horizonal checkered platform
-	dw spritesets_null_spriteset          ; sprite 56 - horz flying rock platform
+	dw spritesets_rock_grass_plats        ; sprite 56 - horz flying rock platform
 	dw spritesets_wood_checkered_plats    ; sprite 57 - vertical checkered platform
-	dw spritesets_null_spriteset          ; sprite 58 - vert flying rock platform
-	dw spritesets_null_spriteset          ; sprite 59
-	dw spritesets_null_spriteset          ; sprite 5A
+	dw spritesets_rock_grass_plats        ; sprite 58 - vert flying rock platform
+	dw spritesets_null_spriteset          ; sprite 59 - turn block bridge - horz
+	dw spritesets_null_spriteset          ; sprite 5A - turn block bridge - horz/vert
 	dw spritesets_wood_checkered_plats    ; sprite 5B - brown wood plat, floats
 	dw spritesets_wood_checkered_plats    ; sprite 5C - checkered platform, floats
-	dw spritesets_null_spriteset          ; sprite 5D
-	dw spritesets_null_spriteset          ; sprite 5E
+	dw spritesets_rock_grass_plats        ; sprite 5D - floating grass platform
+	dw spritesets_rock_grass_plats        ; sprite 5E - grass platform, goes on forever if no buoyancy
 	dw spritesets_wood_checkered_plats    ; sprite 5F - brown platform on chain (moves when mario stands on it)
 	dw spritesets_null_spriteset          ; sprite 60
 	dw spritesets_spiketop_raft           ; sprite 61 - skull raft
@@ -466,6 +461,9 @@ endif
 if !remap_message_box == 0
 .messagebox:
 endif
+if !remap_jumpin_pplant_vine == 0
+.piranhas:
+endif
 .null_spriteset:                              ; used by sprites that don't use the system.
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -564,6 +562,7 @@ endif ; !remap_goomba
 if !remap_message_box
 .messagebox:
 endif
+if !remap_jumpin_pplant_vine
 .piranhas:
 	db $00,$00,$E0,$00,$C0,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -573,6 +572,7 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+endif ; !remap_jumpin_pplant_vine
 .dolphin
 	db $00,$00,$00,$20,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F

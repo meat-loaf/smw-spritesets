@@ -645,24 +645,20 @@ spriteset_setup_nolm:
 	SEP.b #$10
 	JML.l $009705|!bank
 else
-; since this runs in gamemode 12, sprites that are on screen when the level
-; loads (in gamemode 11) need their tile offsets actually set up.
-fix_sprites:
-	SEP.b #$30
-	LDX.b #!num_sprites-1
-.loop:
-	LDA.w !14C8,x
-	BEQ.b .next
-	JSL.l sprset_init
-.next:
-	DEX
-	BPL.b .loop
-	REP.b #$10
-	BRA.b spriteset_setup_lm_skip_set_spriteset
 ; AXY are 16 bit here. $8A contains the pointer to the current ExGFX number to be loaded.
 ; We will use the lower 8 bits of the SP3 ExGFX file number as the spriteset number.
 spriteset_setup_lm:
 	PHX : PHY : PHA : PHP
+	; note this code is called with 8-bit axy when not using
+	; note LM's super gfx bypass, 16-bit otherwise. i'd like a more proper
+	; note way to detect this, though: maybe it's in the 32 bytes of
+	; note ram at $7FC000 somewhere.
+
+	; check if we're 16 or 8 bit A:
+	; loads EA00 with 16 bit A, or LDA #$00 : NOP
+	; with 8-bit A.
+	LDA.w #$EA00
+	BPL.b .skip
 	SEP.b #$20
 	LDA.w $0100|!addr
 	CMP.b #$12
@@ -670,7 +666,7 @@ spriteset_setup_lm:
 	CPY.w #$0012          ; SP3 index
 	BEQ.b .set_spriteset_and_upload
 	CPY.w #$0010          ; SP4 index
-	BEQ.b fix_sprites
+	BEQ.b .skip_set_spriteset
 	; if neither, fall through to original code (decomp gfx)
 .skip:
 	PLP : PLA : PLY : PLX
@@ -680,6 +676,19 @@ spriteset_setup_lm:
 	; low byte of graphics file number (only used for SP3)
 	LDA.b [$8A],y
 	STA   !current_spriteset
+; since this runs in gamemode 12, sprites that are on screen when the level
+; loads initially (in gamemode 11) need their tile offsets actually set up.
+.fix_sprites:
+	SEP.b #$10
+	LDX.b #!num_sprites-1
+.spr_loop:
+	LDA.w !14C8,x
+	BEQ.b .next
+	JSL.l sprset_init
+.next:
+	DEX
+	BPL.b .spr_loop
+	REP.b #$10
 .skip_set_spriteset:
 	TYX
 	LDY.w #$0003
@@ -693,7 +702,7 @@ spriteset_setup_lm:
 	; based on the spriteset number
 	ADC.l .indexes-$10,x
 	TAX
-.loop:
+.gfx_loop:
 	LDA.l spriteset_gfx_listing,x
 	; decomp gfx
 	JSL.l $0FF900|!bank
@@ -708,7 +717,7 @@ spriteset_setup_lm:
 	STA.b $00
 	DEX : DEX
 	DEY
-	BPL.b .loop
+	BPL.b .gfx_loop
 
 	LDA.w #$AD00      ; \ restore original upload destination
 	STA.b $00         ; / (unsure when this is actually set)
@@ -716,7 +725,6 @@ spriteset_setup_lm:
 	RTL
 .indexes
 	dw $0006,$000E
-
 endif
 
 incsrc "spriteset_listing.asm"
@@ -726,3 +734,4 @@ incsrc "remaps.asm"
 pullpc
 
 print "freespace used: ", freespaceuse, " bytes."
+print "modified ", bytes, " bytes."
