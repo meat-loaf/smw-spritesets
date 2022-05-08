@@ -376,7 +376,7 @@ brown_plat_main:
 	; the original main
 	JMP.w $01C773|!bank
 ; 14/13 bytes freed (depending on width of !spriteset_offset)
-print pc
+;print pc
 warnpc $019E0D|!bank
 
 ; subsprgfx 2 optimization
@@ -441,8 +441,6 @@ store_tile1_bank2:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
 store_tile2_bank2:
 	%storetile_hijack(!tile_off_scratch,$0306|!addr,RTS)
-store_tile3_bank2:
-	%storetile_hijack(!tile_off_scratch,$030A|!addr,RTS)
 ext_store_tile1_lo_bank2:
 	%storetile_hijack("!ext_spriteset_offset,x", $0202|!addr,RTS)
 mex_store_tile1_lo_bank2:

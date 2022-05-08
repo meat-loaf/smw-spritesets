@@ -131,20 +131,20 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 7F - gold 1up
 	dw spritesets_null_spriteset          ; sprite 80 - key
 	dw spritesets_null_spriteset          ; sprite 81 - item roulette
-	dw spritesets_null_spriteset          ; sprite 82
+	dw spritesets_null_spriteset          ; sprite 82 - bonus game roulette
 	dw spritesets_null_spriteset          ; sprite 83 - flying question block, left
 	dw spritesets_null_spriteset          ; sprite 84 - flying question block, back and forth
-	dw spritesets_null_spriteset          ; sprite 85
-	dw spritesets_null_spriteset          ; sprite 86
-	dw spritesets_null_spriteset          ; sprite 87
-	dw spritesets_null_spriteset          ; sprite 88
-	dw spritesets_null_spriteset          ; sprite 89
-	dw spritesets_null_spriteset          ; sprite 8A
-	dw spritesets_null_spriteset          ; sprite 8B
-	dw spritesets_null_spriteset          ; sprite 8C
-	dw spritesets_null_spriteset          ; sprite 8D
-	dw spritesets_null_spriteset          ; sprite 8E
-	dw spritesets_null_spriteset          ; sprite 8F
+	dw spritesets_null_spriteset          ; sprite 85 - unused sprite
+	dw spritesets_null_spriteset          ; sprite 86 - wiggler
+	dw spritesets_null_spriteset          ; sprite 87 - lakitu's cloud
+	dw spritesets_null_spriteset          ; sprite 88 - layer 3 wing cage
+	dw spritesets_null_spriteset          ; sprite 89 - layer 3 smasher
+	dw spritesets_null_spriteset          ; sprite 8A - yoshi's house bird
+	dw spritesets_null_spriteset          ; sprite 8B - yoshi's house smoke
+	dw spritesets_null_spriteset          ; sprite 8C - side exit/yoshi house smoke generator
+	dw spritesets_null_spriteset          ; sprite 8D - ghost house exit sign/door
+	dw spritesets_null_spriteset          ; sprite 8E - 'warp hole' blocks
+	dw spritesets_null_spriteset          ; sprite 8F - mushroom platforms
 	dw spritesets_bigboo_smashplayers     ; sprite 90 - gas bubble
 	dw spritesets_chucks                  ; sprite 91 - Chargin' Chuck
 	dw spritesets_chucks                  ; sprite 92 - Splittin' Chuck
@@ -162,9 +162,9 @@ spriteset_off_ptrs:
 	dw spritesets_castle_blk_bnc_gndr     ; sprite 9E - ball 'n' chain
 	dw spritesets_banzai_bill             ; sprite 9F - Banzai Bill
 	dw spritesets_null_spriteset          ; sprite A0
-	dw spritesets_null_spriteset          ; sprite A1
-	dw spritesets_null_spriteset          ; sprite A2
-	dw spritesets_null_spriteset          ; sprite A3
+	dw spritesets_bowling_ball            ; sprite A1 - bowser's bowling ball
+	dw spritesets_mechakoopa              ; sprite A2 - mechakoopa
+	dw spritesets_wood_checkered_plats    ; sprite A3 - single grey wood platform on chain
 	dw spritesets_null_spriteset          ; sprite A4
 	dw spritesets_null_spriteset          ; sprite A5
 	dw spritesets_null_spriteset          ; sprite A6
@@ -199,7 +199,7 @@ spriteset_off_ptrs:
 	dw spritesets_porcupuffer             ; sprite C3
 	dw spritesets_null_spriteset          ; sprite C4
 	dw spritesets_bigboo_smashplayers     ; sprite C5 - big boo boss
-	dw spritesets_null_spriteset          ; sprite C6
+	dw spritesets_disco                   ; sprite C6 - disco ball
 	dw spritesets_null_spriteset          ; sprite C7 - invisible mushroom
 	dw spritesets_null_spriteset          ; sprite C8 - light switch block
 if !pixi_installed
@@ -717,6 +717,35 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.mechakoopa:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$20,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.disco:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$40,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.bowling_ball:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$60,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+
+
 if !hijack_lm_code == 0
 level_spriteset:
 	db $00,$00,$03,$00,$00,$00,$00,$07    ; levels 0-7
@@ -798,7 +827,7 @@ spriteset_gfx_listing:
 	dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$007F,$007F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0A: none
+	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0B: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none

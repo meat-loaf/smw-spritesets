@@ -39,3 +39,6 @@
  126 - volcano lotus, super koopa
 *127 - bullet bills
 *128 - rock/grass platforms
+*129 - mechakoopa
+*12A - disco ball
+ 12B - Bowser's bowling ball
