@@ -192,7 +192,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite BC
 	dw spritesets_null_spriteset          ; sprite BD - sliding blue koopa
 	dw spritesets_buzzy_swooper           ; sprite BE - swooper
-	dw spritesets_null_spriteset          ; sprite BF
+	dw spritesets_mega_mole               ; sprite BF - mega_mole
 	dw spritesets_rock_grass_plats        ; sprite C0 - sinking grey rock
 	dw spritesets_null_spriteset          ; sprite C1 - flying grey turn blocks
 	dw spritesets_null_spriteset          ; sprite C2
@@ -717,6 +717,15 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.mega_mole:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$80,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .mechakoopa:
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$20,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -826,7 +835,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$007F		; spriteset 06: lakitu
 	dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
-	dw $007F,$007F,$007F,$007F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
+	dw $007F,$007F,$007F,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0B: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none

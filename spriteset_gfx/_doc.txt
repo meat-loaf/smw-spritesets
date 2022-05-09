@@ -13,7 +13,7 @@
 *10C - Banzai Bill pt. 1
 *10D - Banzai Bill pt. 2
 *10E - Carrot plats
- 10F - Mega Mole
+*10F - Mega Mole
  110 - piranhas, goombas, other things demoted from SP1
  111 - athletic platforms, on/off bounce block, goal sphere
  112 - rope/saw machine, fuzzy
@@ -41,4 +41,4 @@
 *128 - rock/grass platforms
 *129 - mechakoopa
 *12A - disco ball
- 12B - Bowser's bowling ball
+*12B - Bowser's bowling ball

@@ -75,7 +75,8 @@ horz_dolphins:
 	STA $0305|!addr,y
 	STA $0309|!addr,y
 	LDA.b #$02
-;	LDY.b #$02
+	; jumped to below, bytes needed here
+	; LDY.b #$02
 	JMP.w $02B7A5|!bank
 vert_dolphins:
 	LDA.b $14
@@ -85,5 +86,4 @@ vert_dolphins:
 	; generic spr gfx 1
 	JSL.l $019D5F|!bank
 	RTS
-print "dolphin pc: $",pc
 warnpc $02BC8C|!bank

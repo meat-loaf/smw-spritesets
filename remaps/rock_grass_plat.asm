@@ -1,8 +1,5 @@
 includefrom "remaps.asm"
 
-; note: sprite 5E is currently broken slightly, the last two tiles draw
-; note: below the screen (bottom right tiles)
-
 org $01B383
 grass_rock_plat_tiles:
 db $05,$08,$06,$09,$06,$09,$06,$08  ; \ grass platform
@@ -11,16 +8,10 @@ db $05                              ; /
 db $00,$03,$01,$89,$01,$89,$01,$03  ; \ floating rock
 db $00                              ; /
 
-
-; graphics routine: original was kind of a clusterfuck.
-; still is but managed to squeeze some space out of this one
-; frankly it used a pitiful amount of scratch ram before
 org $01B398|!bank
 rockplat_gfx:
 	; previously: get draw info
-;	STY.b $06     ; base oam index
 	STZ.b $00     ; flag for drawing sprite $5E
-	;LDA.b !9E,x
 	%sprite_num(LDA,x)
 	STA.b $04
 	CMP.b #$5E
@@ -52,8 +43,8 @@ rockplat_gfx:
 	STA.w $030D|!addr,y
 	LDX.b $00
 	BEQ.b .nolong_2
-	STA.w $0115|!addr,y
-	STA.w $011D|!addr,y
+	STA.w $0315|!addr,y
+	STA.w $031D|!addr,y
 .nolong_2:
 	LDA.b #$08
 	LDX.b $00
@@ -77,7 +68,8 @@ rockplat_gfx:
 	ADC.b #$08
 	STA.b $05
 	LDA.w $01B383|!bank,x
-	CLC : ADC.b !tile_off_scratch
+	CLC
+	ADC.b !tile_off_scratch
 	STA $0302|!addr,y
 	LDA.b $01
 	CMP.b $02
@@ -92,8 +84,7 @@ rockplat_gfx:
 	LDA.b $05
 	DEC.b $01
 	BPL .tile_loop
-	LDX $15E9|!addr
-;	LDY.b $06
+	LDX.w $15E9|!addr
 	LDA.b $00
 	BNE.b rock_grass_done
 	LDY.w !15EA,x
@@ -102,8 +93,10 @@ rockplat_gfx:
 	JML rock_grass_finish|!bank     ; oops i ran out of room
 warnpc $01B444|!bank
 pullpc
-; TODO why are these patched up like this? see if we can skip this
-; TODO and remove the need for freespace...
+; TODO| why are these patched up like this? see if we can skip this
+; TODO| and remove the need for freespace...we can probably invert
+; TODO| the condition and 'patch up' the long platform instead
+; TODO| of the short ones, then change the tilemaps above accordingly
 rock_grass_finish:
 	BCC .draw_rock_rhs
 	CLC
