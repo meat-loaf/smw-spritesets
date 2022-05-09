@@ -18,11 +18,20 @@
 ; define installs a small hack to keep it on page 0.
 !jumpin_pirana_stem_sp0_1 = 1
 
+; put the goal sphere on low part of sprite tiles
+!goal_sphere_on_sp0_sp1   = 0
+
+
+; todo| probably won't
 !remap_powerups           = 0
+; todo| more likely, but maybe not
 !remap_berry              = 0
+
 !remap_goomba             = 1
 !remap_message_box        = 1
-!remap_coingame_stuffs    = 1 ; (TODO) coin game cloud coin
+
+; todo
+!remap_coingame_stuffs    = 1
 
 ; the rotating brown platform is a funny sprite, and has some
 ; slightly special handling...its a lot easier to put this here.
@@ -140,10 +149,10 @@ else
 endif
 endmacro
 
-macro replace_wide_pointer(old, new)
+macro replace_wide_pointer(location, ptr)
 pushpc
-org <old>
-dw <new>
+org <location>
+	dw <ptr>
 pullpc
 endmacro
 
@@ -441,6 +450,13 @@ store_tile1_bank2:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
 store_tile2_bank2:
 	%storetile_hijack(!tile_off_scratch,$0306|!addr,RTS)
+; a handful of sprites save the needed space in their routines by jumping to here.
+call_finoamwrite_square_bank2:
+	LDA.b #$03
+.bigtile_only:
+	LDY.b #$02
+	JSL $01B7B3|!bank
+	RTS
 ext_store_tile1_lo_bank2:
 	%storetile_hijack("!ext_spriteset_offset,x", $0202|!addr,RTS)
 mex_store_tile1_lo_bank2:

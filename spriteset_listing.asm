@@ -75,7 +75,7 @@ spriteset_off_ptrs:
 	dw spritesets_fish                    ; sprite 47 - magic fish
 	dw spritesets_chucks                  ; sprite 48 - diggin' chuck's rock
 	dw spritesets_null_spriteset          ; sprite 49 - dong pipe
-	dw spritesets_null_spriteset          ; sprite 4A - goal sphere
+	dw spritesets_goalsphere              ; sprite 4A - goal sphere
 	dw spritesets_lakitu_spiny            ; sprite 4B - pipe lakitu
 	dw spritesets_null_spriteset          ; sprite 4C
 	dw spritesets_monty_mole_pokey        ; sprite 4D - ground monty mole
@@ -101,11 +101,11 @@ spriteset_off_ptrs:
 	dw spritesets_spiketop_raft           ; sprite 61 - skull raft
 	dw spritesets_wood_checkered_plats    ; sprite 62 - brown line guided platform (starts on its own)
 	dw spritesets_wood_checkered_plats    ; sprite 63 - brown/checkered line guided platform (starts when jumped on)
-	dw spritesets_null_spriteset          ; sprite 64
-	dw spritesets_null_spriteset          ; sprite 65
-	dw spritesets_null_spriteset          ; sprite 66
+	dw spritesets_line_machines           ; sprite 64 - line guided rope
+	dw spritesets_line_machines           ; sprite 65 - line guided chainsaw
+	dw spritesets_line_machines           ; sprite 66 - line guided chainsaw, upside-down
 	dw spritesets_castle_blk_bnc_gndr     ; sprite 67 - line guided grinder
-	dw spritesets_null_spriteset          ; sprite 68
+	dw spritesets_fuzzy                   ; sprite 68 - line guided fuzzy
 	dw spritesets_null_spriteset          ; sprite 69
 	dw spritesets_null_spriteset          ; sprite 6A
 	dw spritesets_null_spriteset          ; sprite 6B
@@ -464,6 +464,9 @@ endif
 if !remap_jumpin_pplant_vine == 0
 .piranhas:
 endif
+if !goal_sphere_on_sp0_sp1 == 1
+.goalsphere
+endif
 .null_spriteset:                              ; used by sprites that don't use the system.
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -591,6 +594,16 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.line_machines:
+.fuzzy:
+	db $00,$00,$00,$60,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .spiketop_raft:
 	db $00,$00,$00,$00,$80,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -699,6 +712,9 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+if !goal_sphere_on_sp0_sp1 == 0
+.goalsphere:
+endif
 .wood_checkered_plats:
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $40,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -753,7 +769,6 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-
 
 if !hijack_lm_code == 0
 level_spriteset:
@@ -829,7 +844,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 00: none
 	dw $007F,$007F,$0126,$010B,$0109,$0108,$0107,$0110		; spriteset 01: chuck (pitchin), pokey, monty mole, piranha, super koopa
 	dw $0110,$0102,$010E,$0103,$010D,$010C,$0108,$0107		; spriteset 02: rex, banzai bill, fish, timed + carrot platforms, piranhas
-	dw $007F,$007F,$007F,$007F,$007F,$0116,$0114,$007F		; spriteset 03: dolphins, porcupuffer
+	dw $007F,$007F,$007F,$007F,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
 	dw $007F,$007F,$007F,$0106,$011E,$011D,$011C,$0110		; spriteset 05: ghost house
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$007F		; spriteset 06: lakitu
