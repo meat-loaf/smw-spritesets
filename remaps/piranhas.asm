@@ -10,7 +10,7 @@ org $019BBD|!bank
   endif
 ; jumpin' piranha plant: stem properties
 ; (head properties loaded from cfg)
-org $02E10E
+org $02E10E|!bank
   if !jumpin_pirana_stem_sp0_1
 	db $0A
   else
@@ -18,10 +18,14 @@ org $02E10E
   endif
 
 ; growing vine
-org $01C19E
+org $01C19E|!bank
 	db $00
-org $01C1A2
+org $01C1A2|!bank
 	db $02
+
+; growing vine tilestore
+org $01C1A3|!bank
+	JSR.w store_tile1_bank1
 ; 166E vals
 org ($07F3FE+$4F)|!bank
 	db $09,$09
@@ -47,6 +51,10 @@ org $01C19E
 	db $AC
 org $01C1A2
 	db $AE
+
+; growing vine tilestore
+org $01C1A3|!bank
+	STA.w $0302|!addr,y
 
 ; 166E vals
 org ($07F3FE+$4F)|!bank

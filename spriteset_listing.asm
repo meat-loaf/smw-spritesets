@@ -122,7 +122,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 76
 	dw spritesets_null_spriteset          ; sprite 77
 	dw spritesets_null_spriteset          ; sprite 78
-	dw spritesets_null_spriteset          ; sprite 79
+	dw spritesets_piranhas                ; sprite 79 - growing vine
 	dw spritesets_null_spriteset          ; sprite 7A
 	dw spritesets_null_spriteset          ; sprite 7B - goal point tape
 	dw spritesets_null_spriteset          ; sprite 7C
@@ -565,7 +565,7 @@ endif
 if !remap_jumpin_pplant_vine
 .piranhas:
 	db $00,$00,$E0,$00,$C0,$00,$00,$00    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -835,7 +835,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$011F,$007F		; spriteset 06: lakitu
 	dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
-	dw $007F,$007F,$007F,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
+	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0B: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none

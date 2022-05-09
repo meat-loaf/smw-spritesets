@@ -2,10 +2,10 @@ includefrom "remaps.asm"
 
 org $01B383
 grass_rock_plat_tiles:
-db $05,$08,$06,$09,$06,$09,$06,$08  ; \ grass platform
+db $05,$08,$06,$08,$05,$09,$06,$08  ; \ grass platform
 db $05                              ; /
 
-db $00,$03,$01,$89,$01,$89,$01,$03  ; \ floating rock
+db $00,$03,$01,$03,$00,$03,$01,$03  ; \ floating rock
 db $00                              ; /
 
 org $01B398|!bank
@@ -86,39 +86,25 @@ rockplat_gfx:
 	BPL .tile_loop
 	LDX.w $15E9|!addr
 	LDA.b $00
-	BNE.b rock_grass_done
+	; inverted from the original: the original game special cased the smaller platforms.
+	; instead, we special-cased the longer platform and modified the tilemaps above accordingly
+	BEQ.b .done
 	LDY.w !15EA,x
-	LDA.b $04
-	CMP.b #$5B
-	JML rock_grass_finish|!bank     ; oops i ran out of room
-warnpc $01B444|!bank
-pullpc
-; TODO| why are these patched up like this? see if we can skip this
-; TODO| and remove the need for freespace...we can probably invert
-; TODO| the condition and 'patch up' the long platform instead
-; TODO| of the short ones, then change the tilemaps above accordingly
-rock_grass_finish:
-	BCC .draw_rock_rhs
+              ; tile number of the top center of the grass platform (for long plat)
+	LDA.b #$06
 	CLC
-              ; tile number of the top end of the grass platform
-	LDA.b #$05
 	ADC.b !tile_off_scratch
 	STA.w $0312|!addr,y
-              ; tile number of the bottom end of the grass platform
-	LDA.b #$08
+              ; tile number of the bottom center of the grass platform (for long plat)
+	LDA.b #$09
 	ADC !tile_off_scratch
 	STA $030E|!addr,y
-	JML rock_grass_done|!bank
-.draw_rock_rhs:
-              ; tile number of the top end of the rock platform
-	LDA.b #$00
-	ADC.b !tile_off_scratch
-	STA $0312|!addr,y
-              ; tile number of the bottom end of the rock platform
-	LDA.b #$03
-	ADC.b !tile_off_scratch
-	STA $030E|!addr,y
-	JML rock_grass_done|!bank
-pushpc
-org $01B444|!bank
-rock_grass_done:
+.done:
+	LDY.b $00
+	LDA .tiles_drawn,y
+	LDY.b #$02
+	; finish oam write
+	JMP.w $01B7BB|!bank
+.tiles_drawn:
+	db $04,$08
+warnpc $01B450|!bank
