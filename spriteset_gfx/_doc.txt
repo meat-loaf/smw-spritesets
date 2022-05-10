@@ -34,7 +34,7 @@
 *121 - net koopas
 *122 - castle block, grinders, ball n chain
 *123 - magikoopa, castle bg flames
- 124 - bowser statue, hothead
+*124 - bowser statue, hothead
  125 - tbd
  126 - volcano lotus, super koopa
 *127 - bullet bills

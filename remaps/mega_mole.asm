@@ -70,5 +70,4 @@ mega_mole_gfx:
 	;LDY.b #$02
 	;LDA.b #$03
 	;JSL.l $01B7B4|!bank
-;print "mega mole pc: $", pc
 warnpc $03889F|!bank

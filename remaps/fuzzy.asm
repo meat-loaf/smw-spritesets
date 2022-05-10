@@ -1,10 +1,10 @@
 includefrom "remaps.asm"
 
+!fuzzy_tile = $0E
+
 ; part of the grinder's gfx routine...
 org $01DBD2|!bank
 	BRA.b fuzz_gfx_hijack_fin
-
-!fuzzy_tile = $0E
 
 org $01DBED|!bank
 fuzz_gfx_hijack:
@@ -24,3 +24,40 @@ fuzz_gfx_hijack:
 	PLX
 	JMP.w $01B37E|!bank
 warnpc $01DC0A|!bank
+
+; wall following sparky/fuzzball
+org $02BE5B|!addr
+wall_fuzz:
+	LDA.b #!fuzzy_tile
+	CLC
+	ADC.b !tile_off_scratch
+	STA.w $0302|!addr,y
+if !wall_fuzzy_alt_behav
+  if !pixi_installed && !wall_fuzzy_alt_exbit
+	LDA   !extra_bits,x
+	AND.b #$04
+  else
+	LDA $192B|!addr
+	CMP.b #$02
+  endif
+        BNE.b .alt
+endif
+	LDA.b $14
+	AND.b #$04
+	LSR   #2
+	TAX
+	LDA.w $02BE4C|!bank,x
+	ORA.b $64
+	STA.w $0303|!addr,y
+	LDX $15E9|!addr
+	RTS
+if !wall_fuzzy_alt_behav
+.alt:
+	LDA.b $14
+	AND.b #$0C
+	ASL   #4
+	EOR.w $0303|!addr,y
+	STA.w $0303|!addr,y
+	RTS
+endif
+warnpc $02BE90|!addr

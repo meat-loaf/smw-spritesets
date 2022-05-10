@@ -21,6 +21,16 @@
 ; put the goal sphere on low part of sprite tiles
 !goal_sphere_on_sp0_sp1   = 0
 
+; alternate behavior for sprite A5 (originally, the game
+; used the sprite tilemap setting)
+!wall_fuzzy_alt_behav     = 1
+; if pixi is installed, use the extra bit of sprite A5
+; to determine which to act like. if disabled, use the
+; sprite tilemap setting as typical. note that they share
+; the same tile index now, though
+; unset acts like the fuzzy, set acts like the hothead
+!wall_fuzzy_alt_exbit     = 1
+
 
 ; todo| probably won't
 !remap_powerups           = 0
@@ -499,7 +509,6 @@ superkoopa_tile_store:
 	; super koopatiles
 	ADC.w $02EC72|!bank,x
 	JMP.w $02ED09|!bank
-; there's two bytes left here.... /me sweats
 warnpc $02D580|!bank
 
 ;; bank 03 hijacks ;;
@@ -567,7 +576,7 @@ sprset_init:
 
 if !pixi_installed
 	LDA   !extra_bits,x
-	AND.b #$04
+	AND.b #$08
 	BEQ.b .notcustom
 	LDA   !7FAB9E,x
 	REP.b #$30
