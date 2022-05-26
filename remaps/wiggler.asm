@@ -13,7 +13,7 @@ org $02F0D8|!bank
 org $02F103|!bank
 ; free space
 fillbyte $FF
-fill $09
+fill $0D
 wiggler_segment_buff_offs:
 	db $00,$1E,$3E,$5E,$7E
 wiggler_segment_yoffs:
@@ -31,7 +31,6 @@ wiggler_small_tile_yoffs:
 	db $00,$00
 wiggler_gfx:
 	JSR.w $02D378|!bank
-	INY   #4          ; angry face/flower tile drawn later
 	LDA.w !1570,x     ; \ animation frame counter
 	STA.b $03         ; /
 	LDA.w !15F6,x     ; \ yxppccct
@@ -42,6 +41,7 @@ wiggler_gfx:
 	STA.b $02         ; /
 	LDX #$00
 .draw_loop:
+	INY   #4          ; angry face/flower tile drawn later
 	STY.b $0A         ; > sprite OAM index
 	STX.b $05
 	LDA.b $03
@@ -90,7 +90,6 @@ wiggler_gfx:
 	ORA.b #$40
 .no_flip:
 	STA.w $0303|!addr,y
-	INY   #4
 	LDX.b $05
 	; changing this to a DEX/BPL would require reversing the bitfield
 	; in the C2 table, at least
