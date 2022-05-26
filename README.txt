@@ -11,7 +11,10 @@ assigning a new spriteset index to your level and preparing the offsets accordin
 the game's original sprites to use the system. In some cases, there is a
 performance overhead of a jsr/rts (12 cycles) to store the tile. In time,
 I hope to reduce these as much as I can, but my main concern is making
-the patch be as unintrusive as possible.
+the patch be as unintrusive as possible. However, many of the sprite graphics
+routines have been rewritten to fit the tile store(s) in-place. I didn't consider
+this too intrusive, as it's quite rare for other patches to change sprite graphics
+routines.
 	The game's generic sprite graphics routines in bank 01 have been modified
 in-place to not require such a jsr/rts hijack, as I thought the performance penalty
 would simply be too high there (many sprites call these routines and then update their
@@ -64,7 +67,7 @@ to the table to have up to 0xFF (255) of them.
 
                          - Does it work with custom sprites? -
 	Yes. The location of the sprite load hijack is called for all sprites, including custom
-ones .The ram address used for the tile offset will be populated in custom sprites as well. The
+ones. The ram address used for the tile offset will be populated in custom sprites as well. The
 spriteset_listing.asm file has entries for custom sprites you may edit (you can even have them
 share space with original sprites, if desired. From the perspective of this system, there is no
 distinction between them).
