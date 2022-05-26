@@ -41,9 +41,11 @@ incsrc "remaps/pencil.asm"
 incsrc "remaps/piranhas.asm"
 incsrc "remaps/pokey.asm"
 incsrc "remaps/porcu_puffer.asm"
-incsrc "remaps/rock_grass_plat.asm"           ; TODO
 incsrc "remaps/reflecting_fireball.asm"
+incsrc "remaps/rock_grass_plat.asm"
+incsrc "remaps/rope_machine.asm"
 incsrc "remaps/rex.asm"
+incsrc "remaps/rip_van_fish.asm"
 incsrc "remaps/skull_plat.asm"
 incsrc "remaps/spike_top.asm"
 incsrc "remaps/spiny.asm"
@@ -54,7 +56,7 @@ incsrc "remaps/thwimp.asm"
 incsrc "remaps/thwomp.asm"
 incsrc "remaps/timed_plat.asm"
 incsrc "remaps/volcano_lotus.asm"
-incsrc "remaps/wiggler.asm"                   ; TODO not done, graphics routine needs a work to be up to snuff
+incsrc "remaps/wiggler.asm"                   ; includes extended flower
 incsrc "remaps/wood_checker_plats.asm"
 incsrc "remaps/wood_spinny_plat.asm"
 

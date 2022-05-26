@@ -189,7 +189,7 @@ if <inherit>
 	STA.l <off_table>,x
 	LDX.w $15E9|!addr
   else
-	STA.l <off_table>,y
+	STA.w <off_table>,y
   endif
 else
 	JSL.l <noinherit_routine>
@@ -461,19 +461,19 @@ store_tile1_bank2:
 store_tile2_bank2:
 	%storetile_hijack(!tile_off_scratch,$0306|!addr,RTS)
 ; a handful of sprites save the needed space in their routines by jumping to here.
-call_finoamwrite_square_bank2:
-	LDA.b #$03
-.bigtile_only:
+call_finoamwrite_large_bank2:
 	LDY.b #$02
 	JSL $01B7B3|!bank
 	RTS
 ext_store_tile1_lo_bank2:
 	%storetile_hijack("!ext_spriteset_offset,x", $0202|!addr,RTS)
 mex_store_tile1_lo_bank2:
+	LDX.w $1698|!addr
+.noloadx
 	%storetile_hijack("!mex_spriteset_offset,x", $0202|!addr,RTS)
 ; this is messy but the best I will do for now...
 cls_store_tile1_bank2:
-	LDX $15E9|!addr
+	LDX.w $15E9|!addr
 .noloadx
 	%storetile_hijack("!cls_spriteset_offset,x", $0302|!addr,RTS)
 ; A has the sprite to spawn, Y has its slot.
@@ -497,18 +497,10 @@ else
 endif
 .init_done              ; if inheriting is enabled, we jump back here.
 	RTS
-superkoopa_tile_store:
-	; super koopa tile props
-	LDA.w $02EC96|!bank,x
-	LSR
-	LDA.b #$00
-	BCC.b .tile_on_lo_page
-	LDA.b !tile_off_scratch
-.tile_on_lo_page
-	CLC
-	; super koopatiles
-	ADC.w $02EC72|!bank,x
-	JMP.w $02ED09|!bank
+mexsprite_spawn_bank2:
+%altsprite_spawn($17F0|!addr,!mex_spriteset_offset, \
+                 !minorextended_sprites_inherit_parent, "!spriteset_offset,x", \
+                 !mex_off_on_wram_mirror,mex_sprset_init|!bank, RTS)
 warnpc $02D580|!bank
 
 ;; bank 03 hijacks ;;

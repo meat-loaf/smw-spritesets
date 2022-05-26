@@ -29,5 +29,5 @@ banzai_bill_gfx:
 	BPL .loop
 	PLX
 	LDA.b #$0F
-	JMP.w call_finoamwrite_square_bank2_bigtile_only
+	JMP.w call_finoamwrite_large_bank2
 warnpc $02D617|!bank

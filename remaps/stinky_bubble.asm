@@ -37,5 +37,5 @@ org $02E3E1|!bank
 	BPL.b .loop
 	PLX
 	LDA.B #$0F
-	JMP.w call_finoamwrite_square_bank2_bigtile_only
+	JMP.w call_finoamwrite_large_bank2
 warnpc $02E417|!bank
