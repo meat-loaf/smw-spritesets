@@ -1,0 +1,13 @@
+* Optimize Mechakoopa GFX routine
+* Optimize Urchin GFX routine
+* Optimize Ball 'n' chain GFX routine
+* Fix buggy super-koopa
+* Lakitu hardcoded OAM fix (?)
+* Dino Rhino/Torch implementation
+* P-Balloon implementatoin
+* Torpedo Ted implementatoin
+* Coin game cloud implementation
+* Tileset-specific bounce blocks
+* Yoshi hanlding
+* Solution for bullet bill on SP3/4 death frame
+* Validate SA-1

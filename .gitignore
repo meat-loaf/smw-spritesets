@@ -1,3 +1,13 @@
 pixi/*
 *.smc
+*.sfc
 *.srm
+Graphics/
+ExGraphics/
+*.s16
+*.dsc
+*.extmod
+*.ssc
+*.mw2
+*.mwt
+list.txt

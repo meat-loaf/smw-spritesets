@@ -2,7 +2,7 @@
  101 - Koopas pt 2
 *102 - fish
 *103 - rex
-*104 - cave 1 (buzzy beetle, swooper)
+*104 - buzzy beetle, swooper
 *105 - blaaaargg
 *106 - eeries, fishin' boo
 *107 - chargin/clappin/whistlin chuck pt 1
@@ -17,7 +17,7 @@
  110 - piranhas, goombas, other things demoted from SP1
  111 - athletic platforms, on/off bounce block, goal sphere
  112 - rope/saw machine, fuzzy
- 113 - urchin, blurp fish
+*113 - urchin, blurp fish
 *114 - dolphins
  115 - torpedo ted
 *116 - porcu-puffer
@@ -42,3 +42,7 @@
 *129 - mechakoopa
 *12A - disco ball
 *12B - Bowser's bowling ball
+ 12C - tbd
+ 12D - Dino Torch (fire)
+ 12E - Dino Torch (body)
+ 12F - Dino Rhino

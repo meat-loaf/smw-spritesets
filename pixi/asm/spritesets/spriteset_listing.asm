@@ -39,9 +39,9 @@ spriteset_off_ptrs:
 	dw spritesets_climbing_koopas         ; sprite 23 - net koopa (red, vert)
 	dw spritesets_climbing_koopas         ; sprite 24 - net koopa (grn, horz)
 	dw spritesets_climbing_koopas         ; sprite 25 - net koopa (red, horz)
-	dw spritesets_thwomp_thwimp_spike     ; sprite 26 - thwomp
-	dw spritesets_thwomp_thwimp_spike     ; sprite 27 - thwimp
-	dw spritesets_bigboo_smashplayers     ; sprite 28 - big boo
+	dw spritesets_thwomp                  ; sprite 26 - thwomp
+	dw spritesets_thwimp                  ; sprite 27 - thwimp
+	dw spritesets_bigboo                  ; sprite 28 - big boo
 	dw spritesets_null_spriteset          ; sprite 29 - koopa kids
 	dw spritesets_piranhas                ; sprite 2A - upside-down piranha
 	dw spritesets_null_spriteset          ; sprite 2B - sumo bros lightning
@@ -49,9 +49,9 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 2D - baby yoshi (grn)
 	dw spritesets_spiketop_raft           ; sprite 2E - spike top
 	dw spritesets_null_spriteset          ; sprite 2F - springboard
-	dw spritesets_dry_bones_beetle_pencil ; sprite 30 - dry bones, throws bones
-	dw spritesets_dry_bones_beetle_pencil ; sprite 31 - bony beetle
-	dw spritesets_dry_bones_beetle_pencil ; sprite 32 - dry bones, stays on ledge
+	dw spritesets_dry_bones               ; sprite 30 - dry bones, throws bones
+	dw spritesets_bony_beetle             ; sprite 31 - bony beetle
+	dw spritesets_dry_bones               ; sprite 32 - dry bones, stays on ledge
 	dw spritesets_null_spriteset          ; sprite 33 - podoboo
 	dw spritesets_null_spriteset          ; sprite 34 - boss fireball
 	dw spritesets_null_spriteset          ; sprite 35 - yoshi
@@ -59,9 +59,9 @@ spriteset_off_ptrs:
 	dw spritesets_boo_booblock            ; sprite 37 - boo
 	dw spritesets_eerie_fishin_boo        ; sprite 38 - eerie
 	dw spritesets_eerie_fishin_boo        ; sprite 39 - wave eerie
-	dw spritesets_null_spriteset          ; sprite 3A - urchin, fixed
-	dw spritesets_null_spriteset          ; sprite 3B - urchin, wall-aware
-	dw spritesets_null_spriteset          ; sprite 3C - urchin, wall-follow
+	dw spritesets_urchin                  ; sprite 3A - urchin, fixed
+	dw spritesets_urchin                  ; sprite 3B - urchin, wall-aware
+	dw spritesets_urchin                  ; sprite 3C - urchin, wall-follow
 	dw spritesets_rip_van_fish            ; sprite 3D - rip van fish
 	dw spritesets_null_spriteset          ; sprite 3E - pow switch
 	dw spritesets_null_spriteset          ; sprite 3F - para-goomba
@@ -104,7 +104,7 @@ spriteset_off_ptrs:
 	dw spritesets_line_machines           ; sprite 64 - line guided rope
 	dw spritesets_line_machines           ; sprite 65 - line guided chainsaw
 	dw spritesets_line_machines           ; sprite 66 - line guided chainsaw, upside-down
-	dw spritesets_castle_blk_bnc_gndr     ; sprite 67 - line guided grinder
+	dw spritesets_grinder                 ; sprite 67 - line guided grinder
 	dw spritesets_fuzzy                   ; sprite 68 - line guided fuzzy
 	dw spritesets_null_spriteset          ; sprite 69
 	dw spritesets_null_spriteset          ; sprite 6A
@@ -114,19 +114,19 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 6E
 	dw spritesets_null_spriteset          ; sprite 6F
 	dw spritesets_monty_mole_pokey        ; sprite 70 - pokey
-	dw spritesets_vlotus_superkoopas      ; sprite 71 - super koopa (swoops, red cape)
-	dw spritesets_vlotus_superkoopas      ; sprite 72 - super koopa (swoops, yellow cape)
-	dw spritesets_vlotus_superkoopas      ; sprite 73 - super koopa (running, with feather/ylw cape)
-	dw spritesets_null_spriteset          ; sprite 74
-	dw spritesets_null_spriteset          ; sprite 75
-	dw spritesets_null_spriteset          ; sprite 76
-	dw spritesets_null_spriteset          ; sprite 77
-	dw spritesets_null_spriteset          ; sprite 78
+	dw spritesets_super_koopas            ; sprite 71 - super koopa (swoops, red cape)
+	dw spritesets_super_koopas            ; sprite 72 - super koopa (swoops, yellow cape)
+	dw spritesets_super_koopas            ; sprite 73 - super koopa (running, with feather/ylw cape)
+	dw spritesets_null_spriteset          ; sprite 74 - mushroom
+	dw spritesets_null_spriteset          ; sprite 75 - flower
+	dw spritesets_null_spriteset          ; sprite 76 - star
+	dw spritesets_null_spriteset          ; sprite 77 - feather
+	dw spritesets_null_spriteset          ; sprite 78 - 1-up
 	dw spritesets_piranhas                ; sprite 79 - growing vine
-	dw spritesets_null_spriteset          ; sprite 7A
+	dw spritesets_null_spriteset          ; sprite 7A - firework
 	dw spritesets_null_spriteset          ; sprite 7B - goal point tape
 	dw spritesets_null_spriteset          ; sprite 7C
-	dw spritesets_null_spriteset          ; sprite 7D
+	dw spritesets_null_spriteset          ; sprite 7D - P-Balloon
 	dw spritesets_null_spriteset          ; sprite 7E - red flying coin
 	dw spritesets_null_spriteset          ; sprite 7F - gold 1up
 	dw spritesets_null_spriteset          ; sprite 80 - key
@@ -145,7 +145,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 8D - ghost house exit sign/door
 	dw spritesets_null_spriteset          ; sprite 8E - 'warp hole' blocks
 	dw spritesets_null_spriteset          ; sprite 8F - mushroom platforms
-	dw spritesets_bigboo_smashplayers     ; sprite 90 - gas bubble
+	dw spritesets_smashplayers            ; sprite 90 - gas bubble
 	dw spritesets_chucks                  ; sprite 91 - Chargin' Chuck
 	dw spritesets_chucks                  ; sprite 92 - Splittin' Chuck
 	dw spritesets_chucks                  ; sprite 93 - Bouncin' Chuck
@@ -154,7 +154,7 @@ spriteset_off_ptrs:
 	dw spritesets_chucks                  ; sprite 96 - Chargin' Chuck clone
 	dw spritesets_chucks                  ; sprite 97 - Puntin' Chuck
 	dw spritesets_chucks                  ; sprite 98 - Pitchin' Chuck
-	dw spritesets_vlotus_superkoopas      ; sprite 99 - volcano lotus
+	dw spritesets_volcano_lotus           ; sprite 99 - volcano lotus
 	dw spritesets_null_spriteset          ; sprite 9A - sumo bro
 	dw spritesets_null_spriteset          ; sprite 9B - hammer bro
 	dw spritesets_null_spriteset          ; sprite 9C - hammer bro's flying blocks
@@ -173,32 +173,32 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite A9 - reznor
 	dw spritesets_fishbone                ; sprite AA - fishbone
 	dw spritesets_rex                     ; sprite AB - rex
-	dw spritesets_dry_bones_beetle_pencil ; sprite AC - wooden spike, down then up
-	dw spritesets_dry_bones_beetle_pencil ; sprite AD - wooden spike, up then down
+	dw spritesets_pencil                  ; sprite AC - wooden spike, down then up
+	dw spritesets_pencil                  ; sprite AD - wooden spike, up then down
 	dw spritesets_eerie_fishin_boo        ; sprite AE - fishin' boo
 	dw spritesets_boo_booblock            ; sprite AF - boo block
 	dw spritesets_boo_booblock            ; sprite B0 - boo stream
 	dw spritesets_null_spriteset          ; sprite B1
-	dw spritesets_thwomp_thwimp_spike     ; sprite B2 - falling spike
+	dw spritesets_falling_spike           ; sprite B2 - falling spike
 	dw spritesets_bowser_statue           ; sprite B3 - bowser statue fireball
-	dw spritesets_castle_blk_bnc_gndr     ; sprite B4 - non-line-guided grinder
+	dw spritesets_grinder                 ; sprite B4 - non-line-guided grinder
 	dw spritesets_null_spriteset          ; sprite B5
-	dw spritesets_dry_bones_beetle_pencil ; sprite B6 - reflecting fireball
+	dw spritesets_reflecting_fireball     ; sprite B6 - reflecting fireball
 	dw spritesets_carrot_timed_plats      ; sprite B7 - carrot plat down-right
 	dw spritesets_carrot_timed_plats      ; sprite B8 - carrot plat up-left
 	dw spritesets_messagebox              ; sprite B9 - message box
 	dw spritesets_carrot_timed_plats      ; sprite BA - timed platform
-	dw spritesets_castle_blk_bnc_gndr     ; sprite BB - grey moving castle block
+	dw spritesets_castle_block            ; sprite BB - grey moving castle block
 	dw spritesets_bowser_statue           ; sprite BC - bowser statue
 	dw spritesets_null_spriteset          ; sprite BD - sliding blue koopa
 	dw spritesets_buzzy_swooper           ; sprite BE - swooper
 	dw spritesets_mega_mole               ; sprite BF - mega_mole
 	dw spritesets_rock_grass_plats        ; sprite C0 - sinking grey rock
 	dw spritesets_null_spriteset          ; sprite C1 - flying grey turn blocks
-	dw spritesets_null_spriteset          ; sprite C2
+	dw spritesets_blurp                   ; sprite C2 - blurp fish
 	dw spritesets_porcupuffer             ; sprite C3
 	dw spritesets_null_spriteset          ; sprite C4
-	dw spritesets_bigboo_smashplayers     ; sprite C5 - big boo boss
+	dw spritesets_bigboo                  ; sprite C5 - big boo boss
 	dw spritesets_disco                   ; sprite C6 - disco ball
 	dw spritesets_null_spriteset          ; sprite C7 - invisible mushroom
 	dw spritesets_null_spriteset          ; sprite C8 - light switch block
@@ -603,7 +603,6 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-
 .line_machines:
 .fuzzy:
 .fuzzy_and_sparky:
@@ -643,7 +642,8 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-.bigboo_smashplayers:
+.smashplayers:
+.bigboo:
 	db $00,$00,$00,$00,$00,$20,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
@@ -670,6 +670,10 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.dry_bones:
+.bony_beetle:
+.pencil:
+.reflecting_fireball:
 .dry_bones_beetle_pencil:
 	db $00,$00,$00,$00,$00,$00,$00,$20    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
@@ -680,7 +684,9 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .fishbone:
-.thwomp_thwimp_spike:
+.thwomp:
+.thwimp:
+.falling_spike:
 	db $00,$00,$00,$00,$00,$00,$00,$60    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
@@ -699,7 +705,8 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .ball_n_chain:
-.castle_blk_bnc_gndr:
+.grinder:
+.castle_block:
 	db $00,$00,$00,$00,$00,$00,$00,$A0    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
@@ -717,7 +724,8 @@ endif ; !remap_jumpin_pplant_vine
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-.vlotus_superkoopas
+.super_koopas:
+.volcano_lotus:
 	db $00,$A0,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
@@ -801,6 +809,17 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.urchin:
+.blurp:
+	db $00,$00,$00,$C0,$00,$00,$40,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+
 
 if !hijack_lm_code == 0
 level_spriteset:
@@ -876,7 +895,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 00: none
 	dw $007F,$007F,$0126,$010B,$0109,$0108,$0107,$0110		; spriteset 01: chuck (pitchin), pokey, monty mole, piranha, super koopa
 	dw $0110,$0102,$010E,$0103,$010D,$010C,$0108,$0107		; spriteset 02: rex, banzai bill, fish, timed + carrot platforms, piranhas
-	dw $007F,$007F,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
+	dw $007F,$0113,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
 	dw $007F,$007F,$007F,$0106,$011E,$011D,$011C,$0110		; spriteset 05: ghost house
 	dw $007F,$007F,$007F,$007F,$007F,$011B,$011F,$007F		; spriteset 06: lakitu, wiggler
