@@ -9,7 +9,10 @@
 ; moving some of them can reduce sp1/2 pressure for something like
 ; a sprite status bar, if desired.
 
+
+; XXX this isn't done, don't toggle this one.
 !remap_koopa              = 0
+
 ; remaps growing vine and jumpin' piranha plant
 !remap_jumpin_pplant_vine = 1
 ; put the flapping part of the jumpin' piranha plant on SP0/SP1.
@@ -32,15 +35,10 @@
 !wall_fuzzy_alt_exbit     = 1
 
 
-; todo| probably won't
-!remap_powerups           = 0
-; todo| more likely, but maybe not
-!remap_berry              = 0
-
 !remap_goomba             = 1
 !remap_message_box        = 1
 
-; todo
+; TODO
 !remap_coingame_stuffs    = 1
 
 ; the rotating brown platform is a funny sprite, and has some
@@ -64,38 +62,25 @@
 !use_cluster_spriteset_table = 0
 !use_minorextended_spriteset_table = 0
 
-if read1($00FFD5) == $23
-  if read1($00FFD7) == $0D ; full 6/8 mb sa-1 rom
-	fullsa1rom
-	!fullsa1 = 1
-  else
-	sa1rom
-  endif
-	sa1rom
-	!SA1 = 1
-	!dp = $3000
-	!addr = $6000
-	!bank = $000000
-	!extram_bank = $410000
-	!num_sprites = $16
-else
-	lorom
-	!SA1 = 0
-	!fullsa1 = 0
-	!dp = $0000
-	!addr = $0000
-	!bank = $800000
-	!num_sprites = $0C
-	!extram_bank = $7F0000
-endif
+!PIXI_VER = $32
 
 !pixi_installed = 0
 ;; pixi detection ;;
 if read4($02FFE2) == $44535453          ; "STSD" in little-endian
+	if (read1($02FFE2+$4)) != !PIXI_VER
+		error "Unsupported PIXI version."
+	endif
+
 	!pixi_installed = 1
 endif
 
-incsrc "sa1def.asm"
+if !sa1
+	!extram_bank = $410000
+else
+	!extram_bank = $7F0000
+endif
+
+!num_sprites = !SprSize
 
 ;; ------- freeram ------- ;;
 ; note: Put the sprite tables on wram mirrors if you can.
@@ -115,15 +100,17 @@ incsrc "sa1def.asm"
 ;; ----- end freeram ----- ;;
 
 ; This needs to be on direct page, it's best not to change it.
-!tile_off_scratch         = $5A
+!tile_off_scratch         = $45
 ; a small amount of sprites will precalculate a certain tile
 ; before storing. Currently, only the brown spinning platform
 ; does this.
-!precalc_single_scratch   = $45
+!precalc_single_scratch   = $46
 
 if !SA1
-; same as in sa1's moresprites.asm
+; same as in sa1's more_sprites.asm
 !sprite_num_cache         = $87
+!sprite_ylow_ptr          = $CC
+!sprite_xlow_ptr          = $EE
 endif
 
 ; check if spriteset offset table can use y-indexing and stz
@@ -152,12 +139,29 @@ else
 endif
 
 macro sprite_num(operation, index)
-if not(!SA1)
+if not(!sa1)
 	<operation>.b $9E,<index>
 else
 	<operation>.b !sprite_num_cache
 endif
 endmacro
+
+macro sprite_y_low(operation, index)
+if not(!sa1)
+	<operation>.b $D8,<index>
+else
+	<operation>.b (!sprite_ylow_ptr)
+endif
+endmacro
+
+macro sprite_x_low(operation, index)
+if not(!sa1)
+	<operation>.b $E4,<index>
+else
+	<operation>.b (!sprite_xlow_ptr)
+endif
+endmacro
+
 
 macro replace_wide_pointer(location, ptr)
 pushpc
@@ -543,7 +547,6 @@ org $07F78B|!bank
 ; instead of JSLing to the routine like the game originally did.
 load_sprite_tables:
 	PHX
-;	LDA   !9E,x
 	%sprite_num(LDA,x)
 	TAX
 	LDA.l $07F3FE,x
@@ -558,7 +561,6 @@ org $07F7A0|!bank
 load_tweaker_bytes:
 
 freecode
-print "SpriteSprsetInit = $", pc
 sprset_init:
 	PHY
 	PHX

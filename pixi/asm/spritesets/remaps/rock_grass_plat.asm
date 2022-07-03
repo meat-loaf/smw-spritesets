@@ -20,13 +20,13 @@ rockplat_gfx:
 .nowide
 	LDA.w !15F6,x
 	STA.b $03
-; TODO sa1 support
-	LDA.b $E4,x
+	;LDA.b $E4,x
+	%sprite_x_low(LDA,x)
 	SEC
 	SBC.b $1A
 	STA $05       ; is this the same as $00 after getdrawinfo?
-; TODO sa1 support
-	LDA.b $D8,x
+	;LDA.b $D8,x
+	%sprite_y_low(LDA,x)
 	SEC
 	SBC.b $1C
 	STA.w $0301|!addr,y
