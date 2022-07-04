@@ -3,7 +3,7 @@
 * Optimize Ball 'n' chain GFX routine
 * Fix buggy super-koopa
 * Lakitu hardcoded OAM fix (?)
-* Dino Rhino/Torch implementation
+* Dino Torch implementation
 * P-Balloon implementatoin
 * Torpedo Ted implementatoin
 * Coin game cloud implementation

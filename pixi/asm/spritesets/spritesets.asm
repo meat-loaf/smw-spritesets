@@ -162,7 +162,6 @@ else
 endif
 endmacro
 
-
 macro replace_wide_pointer(location, ptr)
 pushpc
 org <location>
@@ -229,6 +228,9 @@ macro nonstandard_sprset_init(snum_table, off_table, on_wram_mirror, sprset_tabl
   endif
 	<return>
 endmacro
+
+
+finish_oam_write = $01B7B3
 
 ;; bank 00 hijacks ;;
 
@@ -598,6 +600,77 @@ endif
 	PLY
 	RTL
 
+; Arguments:
+; $00 tile x offset base (byte)
+; $01 tile y offset base (byte)
+; $02 pointer to tiles table (word)
+; * table should have 4 entries for each animation frame
+; $04 pointer to props table (word)
+; * props for each tile, 4 bytes total. x flip is or'd in.
+; $06 pointer to xoff table (word): should be 5 bytes. Index is shifted by 1 if x-flipped
+; $08 pointer to yoff table (word)
+; $157C,x: Horizontal facing direction
+; $1602,x: Animation frame.
+; Y: OAM Index
+; All other scratch ram besides $0E-$0F is clobbered
+sub_spr_gfx_square:
+	LDA.w !157C,x
+	EOR.b #$01
+	CLC
+	ROR   #3
+	STA.b $0C               ; facing dir
+
+	LDA.w !157C,x
+	EOR.b #$01
+	ROR
+	LDA.b $06
+	ADC.b #$00
+	STA.b $06
+	BCC +
+	INC $07
++
+	LDA.w !1602,x
+	ASL   #2
+	ADC.b $02               ; \ offset table
+	BCC +                   ; | to point at animation frame
+	INC.b $03               ; / (1 frame is 4 tiles)
++
+	STA.b $02
+
+	TYX
+	LDY.b #$03
+; NOTE: in the below, x is the OAM index and Y is the current
+; tile index we are drawing!
+.loop:
+	LDA.b ($06),y
+	STA.b $0A               ; tile xoff
+	LDA.b ($08),y
+	STA.b $0B               ; tile yoff
+	LDA.b ($04),y
+	STA.b $0D               ; tile prop
+
+	LDA.b ($02),y           ; tile number
+	CLC
+	ADC.b !tile_off_scratch
+	STA.w $0302|!addr,x
+	LDA.b $0D               ; tile prop
+	ORA.b $0C
+	ORA.b $64
+	STA.w $0303|!addr,x
+	LDA.b $01
+	ADC.b $0B
+	STA.w $0301|!addr,x
+	LDA.b $00
+	CLC
+	ADC.b $0A
+	STA.w $0300|!addr,x
+	INX #4
+	DEY
+	BPL.b .loop
+	LDX.w $15E9|!addr
+	LDA.b #$03
+	LDY.b #$02
+	JML.l finish_oam_write|!bank
 if !cluster_sprites_inherit_parent
 sprset_cluster_init_inherit:
 	STA $1892|!addr,x
