@@ -24,6 +24,9 @@
 ; put the goal sphere on low part of sprite tiles
 !goal_sphere_on_sp0_sp1   = 0
 
+; put the p-balloon powerup on low part of sprite tiles
+!pballoon_on_sp0_sp1      = 0
+
 ; alternate behavior for sprite A5 (originally, the game
 ; used the sprite tilemap setting)
 !wall_fuzzy_alt_behav     = 1

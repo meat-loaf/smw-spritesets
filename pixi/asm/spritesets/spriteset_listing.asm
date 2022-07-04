@@ -30,7 +30,7 @@ spriteset_off_ptrs:
 	dw spritesets_piranhas                ; sprite 1A - piranha plant
 	dw spritesets_chucks                  ; sprite 1B - chuck football
 	dw spritesets_bills                   ; sprite 1C - bullet bill
-	dw spritesets_null_spriteset          ; sprite 1D - hoppin' flame
+	dw spritesets_hoppin_flame            ; sprite 1D - hoppin' flame
 	dw spritesets_lakitu_spiny            ; sprite 1E - lakitu/fishin' lakitu
 	dw spritesets_magikoopa_bgflame       ; sprite 1F - magikoopa
 	dw spritesets_magikoopa_bgflame       ; sprite 20 - magikoopa's magic
@@ -126,7 +126,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 7A - firework
 	dw spritesets_null_spriteset          ; sprite 7B - goal point tape
 	dw spritesets_null_spriteset          ; sprite 7C
-	dw spritesets_null_spriteset          ; sprite 7D - P-Balloon
+	dw spritesets_pballoon                ; sprite 7D - P-Balloon
 	dw spritesets_null_spriteset          ; sprite 7E - red flying coin
 	dw spritesets_null_spriteset          ; sprite 7F - gold 1up
 	dw spritesets_null_spriteset          ; sprite 80 - key
@@ -801,8 +801,10 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .wiggler:
+.pballoon:
+.hoppin_flame:
 	db $00,$00,$00,$00,$00,$00,$40,$00    ; spritesets 00-07
-	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$A0,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -920,7 +922,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
-	dw $007F,$007F,$007F,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted
+	dw $007F,$007F,$011B,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted, wiggler
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none

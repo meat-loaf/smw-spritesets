@@ -25,7 +25,7 @@
 *118 - dry bones, reflecting fireball
 *119 - dry bones' bones, bony beetle, pencil
 *11A - spike top, skull raft
- 11B - wiggler, hoppin' fire
+ 11B - wiggler, hoppin' fire, p-balloon
 *11C - Big Boo 1/stinky bubble
 *11D - Big Boo 2
 *11E - boos/boo block/boo ring/boo ceiling/appearing boos

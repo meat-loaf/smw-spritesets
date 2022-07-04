@@ -3,8 +3,21 @@
 * Optimize Ball 'n' chain GFX routine
 * Fix buggy super-koopa
 * Lakitu hardcoded OAM fix (?)
-* P-Balloon implementatoin
+* Hoppin' flame + extended sprite implemntation
+* Bob-omb/ParaBob-omb implementation
+* Goomba (?)/ParaGoomba implementation
+* Sumo brother implementation
+* Hammer brother implementation
+* Forest bubble implementation
+* Rotating grey chain platform implementation
+* Grow/Shrink pipe implementation
 * Coin game cloud implementation
+* Ninji implementation
+* YI4 floating spike ball implementation
+* Ghost House ledge hole implementation
+* Castle climbing net door implementation
+* Line-guided rope machine implementation
+* Mushroom scale platforms implementation
 * Tileset-specific bounce blocks
 * Yoshi hanlding
 * Solution for bullet bill on SP3/4 death frame
