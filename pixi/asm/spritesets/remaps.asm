@@ -57,6 +57,7 @@ incsrc "remaps/swooper.asm"
 incsrc "remaps/thwimp.asm"
 incsrc "remaps/thwomp.asm"
 incsrc "remaps/timed_plat.asm"
+incsrc "remaps/torpedo_ted.asm"               ; includes extended launcher arm
 incsrc "remaps/urchin.asm"
 incsrc "remaps/volcano_lotus.asm"
 incsrc "remaps/wiggler.asm"                   ; includes extended flower

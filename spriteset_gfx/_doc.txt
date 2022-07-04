@@ -19,7 +19,7 @@
  112 - rope/saw machine, fuzzy
 *113 - urchin, blurp fish
 *114 - dolphins
- 115 - torpedo ted
+*115 - torpedo ted
 *116 - porcu-puffer
  117 - rip van fish
 *118 - dry bones, reflecting fireball
@@ -43,6 +43,6 @@
 *12A - disco ball
 *12B - Bowser's bowling ball
  12C - tbd
- 12D - Dino Torch (fire)
- 12E - Dino Torch (body)
- 12F - Dino Rhino
+*12D - Dino Torch (body)
+*12E - Dino Torch (fire)
+*12F - Dino Rhino

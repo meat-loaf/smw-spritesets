@@ -69,7 +69,7 @@ spriteset_off_ptrs:
 	dw spritesets_dolphin                 ; sprite 41 - dolphin, long horz jump
 	dw spritesets_dolphin                 ; sprite 42 - dolphin, short horz jump
 	dw spritesets_dolphin                 ; sprite 43 - dolphin, vert jump
-	dw spritesets_null_spriteset          ; sprite 44 - torpedo ted
+	dw spritesets_torpedo_ted             ; sprite 44 - torpedo ted
 	dw spritesets_null_spriteset          ; sprite 45 - directional coin
 	dw spritesets_chucks                  ; sprite 46 - diggin' chuck
 	dw spritesets_fish                    ; sprite 47 - magic fish
@@ -111,8 +111,8 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 6B
 	dw spritesets_null_spriteset          ; sprite 6C
 	dw spritesets_null_spriteset          ; sprite 6D
-	dw spritesets_null_spriteset          ; sprite 6E
-	dw spritesets_null_spriteset          ; sprite 6F
+	dw spritesets_dinos                   ; sprite 6E - Dino Rhino
+	dw spritesets_dinos                   ; sprite 6F - Dino Torch
 	dw spritesets_monty_mole_pokey        ; sprite 70 - pokey
 	dw spritesets_super_koopas            ; sprite 71 - super koopa (swoops, red cape)
 	dw spritesets_super_koopas            ; sprite 72 - super koopa (swoops, yellow cape)
@@ -819,7 +819,24 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-
+.dinos:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$20,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.torpedo_ted:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$80,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 
 if !hijack_lm_code == 0
 level_spriteset:
@@ -903,7 +920,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0B: none
+	dw $007F,$007F,$007F,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
