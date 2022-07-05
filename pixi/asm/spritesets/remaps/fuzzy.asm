@@ -33,7 +33,7 @@ wall_fuzz:
 	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 if !wall_fuzzy_alt_behav
-  if !pixi_installed && !wall_fuzzy_alt_exbit
+  if !have_extra_bits && !wall_fuzzy_alt_exbit
 	LDA   !extra_bits,x
 	AND.b #$04
   else

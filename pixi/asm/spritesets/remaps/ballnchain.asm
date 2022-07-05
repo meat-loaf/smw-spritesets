@@ -1,5 +1,7 @@
 includefrom "remaps.asm"
 
+!ball_n_chain_ball_tile = $0E
+
 ; chain of ball 'n' chain
 org $02D7A4|!bank
 	db $0C
@@ -12,7 +14,6 @@ org $02D7BB|!bank
 ; can probably be shortened by one byte (it doesnt account for the cycles wasted by
 ; the call itself...) and we can shove the tile offset here without the JSR
 org $02D82B|!bank
-	      ; this byte is the tile of the ball!
-	LDA.b #$0E
+	LDA.b #!ball_n_chain_ball_tile
 	JSR.w store_tile1_bank2
 	NOP

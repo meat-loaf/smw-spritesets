@@ -21,11 +21,11 @@
 *114 - dolphins
 *115 - torpedo ted
 *116 - porcu-puffer
- 117 - rip van fish
+*117 - rip van fish
 *118 - dry bones, reflecting fireball
 *119 - dry bones' bones, bony beetle, pencil
 *11A - spike top, skull raft
- 11B - wiggler, hoppin' fire, p-balloon
+*11B - wiggler, hoppin' fire, p-balloon
 *11C - Big Boo 1/stinky bubble
 *11D - Big Boo 2
 *11E - boos/boo block/boo ring/boo ceiling/appearing boos
@@ -42,7 +42,7 @@
 *129 - mechakoopa
 *12A - disco ball
 *12B - Bowser's bowling ball
- 12C - tbd
+*12C - para bob-omb/goomba, bob-omb
 *12D - Dino Torch (body)
 *12E - Dino Torch (fire)
 *12F - Dino Rhino

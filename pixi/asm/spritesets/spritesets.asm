@@ -30,13 +30,13 @@
 ; alternate behavior for sprite A5 (originally, the game
 ; used the sprite tilemap setting)
 !wall_fuzzy_alt_behav     = 1
+
 ; if pixi is installed, use the extra bit of sprite A5
 ; to determine which to act like. if disabled, use the
 ; sprite tilemap setting as typical. note that they share
 ; the same tile index now, though
 ; unset acts like the fuzzy, set acts like the hothead
 !wall_fuzzy_alt_exbit     = 1
-
 
 !remap_goomba             = 1
 !remap_message_box        = 1
@@ -68,6 +68,7 @@
 !PIXI_VER = $32
 
 !pixi_installed = 0
+!have_extra_bits = 0
 ;; pixi detection ;;
 if read4($02FFE2) == $44535453          ; "STSD" in little-endian
 	if (read1($02FFE2+$4)) != !PIXI_VER
@@ -75,6 +76,7 @@ if read4($02FFE2) == $44535453          ; "STSD" in little-endian
 	endif
 
 	!pixi_installed = 1
+	!have_extra_bits = 1
 endif
 
 if !sa1
@@ -109,7 +111,7 @@ endif
 ; does this.
 !precalc_single_scratch   = $46
 
-if !SA1
+if !sa1
 ; same as in sa1's more_sprites.asm
 !sprite_num_cache         = $87
 !sprite_ylow_ptr          = $CC
@@ -403,7 +405,10 @@ brown_plat_main:
 	STA.b !precalc_single_scratch
 	; the original main
 	JMP.w $01C773|!bank
-; 14/13 bytes freed (depending on width of !spriteset_offset)
+extsprite_spawn_bank1:
+%altsprite_spawn($170B|!addr,!ext_spriteset_offset, \
+                 !extended_sprites_inherit_parent, "!spriteset_offset,x", \
+                 !ext_off_on_wram_mirror,ext_sprset_init|!bank, RTS)
 ;print pc
 warnpc $019E0D|!bank
 
@@ -472,7 +477,7 @@ store_tile2_bank2:
 ; a handful of sprites save the needed space in their routines by jumping to here.
 call_finoamwrite_large_bank2:
 	LDY.b #$02
-	JSL $01B7B3|!bank
+	JSL finish_oam_write|!bank
 	RTS
 ext_store_tile1_lo_bank2:
 	%storetile_hijack("!ext_spriteset_offset,x", $0202|!addr,RTS)
@@ -615,13 +620,13 @@ endif
 ; $157C,x: Horizontal facing direction
 ; $1602,x: Animation frame.
 ; Y: OAM Index
-; All other scratch ram besides $0E-$0F is clobbered
+; $0A is clobbered.
 sub_spr_gfx_square:
 	LDA.w !157C,x
 	EOR.b #$01
 	CLC
 	ROR   #3
-	STA.b $0C               ; facing dir
+	STA.b $0A               ; facing dir
 
 	LDA.w !157C,x
 	EOR.b #$01
@@ -645,27 +650,20 @@ sub_spr_gfx_square:
 ; NOTE: in the below, x is the OAM index and Y is the current
 ; tile index we are drawing!
 .loop:
-	LDA.b ($06),y
-	STA.b $0A               ; tile xoff
-	LDA.b ($08),y
-	STA.b $0B               ; tile yoff
-	LDA.b ($04),y
-	STA.b $0D               ; tile prop
-
 	LDA.b ($02),y           ; tile number
 	CLC
 	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,x
-	LDA.b $0D               ; tile prop
-	ORA.b $0C
+	LDA.b ($04),y           ; tile prop
+	ORA.b $0A
 	ORA.b $64
 	STA.w $0303|!addr,x
-	LDA.b $01
-	ADC.b $0B
+	LDA.b ($08),y           ; y off
+	ADC.b $01
 	STA.w $0301|!addr,x
-	LDA.b $00
+	LDA.b ($06),y           ; x off
 	CLC
-	ADC.b $0A
+	ADC.b $00
 	STA.w $0300|!addr,x
 	INX #4
 	DEY
@@ -717,10 +715,12 @@ cls_sprset_init:
                                  !cls_off_on_wram_mirror,cls_spriteset_off_ptrs, $15E9|!addr, RTL)
 endif
 
-
-;if or(not(!minorextended_sprites_inherit_parent), !use_minorextended_spriteset_table)
-;print "ExtendedSprteSprsetInit = $", pc
-;mext_sprset_init: ; todo macro?
+if or(not(!minorextended_sprites_inherit_parent), !use_minorextended_spriteset_table)
+print "ClusterSpriteSprsetInit = $", pc
+mex_sprset_init:
+	%nonstandard_sprset_init($17F0|!addr,!mex_spriteset_offset, \
+                                 !mex_off_on_wram_mirror,mex_spriteset_off_ptrs, $1698|!addr, RTL)
+endif
 
 if !hijack_lm_code == 0
 spriteset_setup_nolm:
@@ -738,14 +738,16 @@ spriteset_setup_nolm:
 	SEP.b #$10
 	JML.l $009705|!bank
 else
-; AXY are 16 bit here. $8A contains the pointer to the current ExGFX number to be loaded.
-; We will use the lower 8 bits of the SP3 ExGFX file number as the spriteset number.
+; AXY are 16 bit here. $8A contains a pointer to the level's ExGFX list, and Y
+; is the index to the current file to be uploaded. We will use the lower 8 bits
+; of the SP3 ExGFX file number as the spriteset number. The others can be used
+; for other things during load time, if desired.
 spriteset_setup_lm:
 	PHX : PHY : PHA : PHP
-	; note this code is called with 8-bit axy when not using
-	; note LM's super gfx bypass, 16-bit otherwise. i'd like a more proper
-	; note way to detect this, though: maybe it's in the 32 bytes of
-	; note ram at $7FC000 somewhere.
+	; note: this code is called with 8-bit axy when not using
+	; note: LM's super gfx bypass, 16-bit otherwise. i'd like a more proper
+	; note: way to detect this, though: maybe it's in the 32 bytes of
+	; note: ram at $7FC000 somewhere.
 
 	; check if we're 16 or 8 bit A:
 	; loads EA00 with 16 bit A, or LDA #$00 : NOP

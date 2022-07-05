@@ -14,7 +14,7 @@ spriteset_off_ptrs:
 	dw spritesets_koopas                  ; sprite 0A - parakoopa red (vert)
 	dw spritesets_koopas                  ; sprite 0B - parakoopa red (horz)
 	dw spritesets_koopas                  ; sprite 0C - parakoopa ylw (dumb)
-	dw spritesets_null_spriteset          ; sprite 0D - bob omb
+	dw spritesets_parachute_bob_goom      ; sprite 0D - bob omb
 	dw spritesets_null_spriteset          ; sprite 0E - keyhole
 	dw spritesets_goomba                  ; sprite 0F - goomba     (galoomba)
 	dw spritesets_goomba                  ; sprite 10 - paragoomba (paragaloomba)
@@ -64,8 +64,8 @@ spriteset_off_ptrs:
 	dw spritesets_urchin                  ; sprite 3C - urchin, wall-follow
 	dw spritesets_rip_van_fish            ; sprite 3D - rip van fish
 	dw spritesets_null_spriteset          ; sprite 3E - pow switch
-	dw spritesets_null_spriteset          ; sprite 3F - para-goomba
-	dw spritesets_null_spriteset          ; sprite 40 - para-bomb
+	dw spritesets_parachute_bob_goom      ; sprite 3F - para-goomba
+	dw spritesets_parachute_bob_goom      ; sprite 40 - para-bomb
 	dw spritesets_dolphin                 ; sprite 41 - dolphin, long horz jump
 	dw spritesets_dolphin                 ; sprite 42 - dolphin, short horz jump
 	dw spritesets_dolphin                 ; sprite 43 - dolphin, vert jump
@@ -413,7 +413,7 @@ ext_spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; extended sprite 00
 	dw spritesets_null_spriteset          ; extended sprite 01
 	dw spritesets_null_spriteset          ; extended sprite 02
-	dw spritesets_null_spriteset          ; extended sprite 03
+	dw spritesets_hoppin_flame            ; extended sprite 03 - hoppin' flame baby
 	dw spritesets_null_spriteset          ; extended sprite 04
 	dw spritesets_null_spriteset          ; extended sprite 05
 	dw spritesets_null_spriteset          ; extended sprite 06
@@ -447,8 +447,19 @@ cls_spriteset_off_ptrs:
 endif
 
 if not(!minorextended_sprites_inherit_parent) || !use_minorextended_spriteset_table
-exm_spriteset_off_ptrs:
-; todo
+mex_spriteset_off_ptrs:
+	dw spritesets_null_spriteset          ; cluster sprite 00 - n/a
+	dw spritesets_null_spriteset          ; cluster sprite 01 - piece of brick block
+	dw spritesets_null_spriteset          ; cluster sprite 02 - small spin jump star
+	dw spritesets_null_spriteset          ; cluster sprite 03 - cracked yoshi egg shell piece
+	dw spritesets_null_spriteset          ; cluster sprite 04 - podoboo flame
+	dw spritesets_null_spriteset          ; cluster sprite 05 - blue star sparkle
+	dw spritesets_rip_van_fish            ; cluster sprite 06 - rip van fish's z
+	dw spritesets_null_spriteset          ; cluster sprite 07 - water splash
+	dw spritesets_null_spriteset          ; cluster sprite 08 - unused music note, moves up-right
+	dw spritesets_null_spriteset          ; cluster sprite 09 - unused music note, moves up-right
+	dw spritesets_boo_booblock            ; cluster sprite 0A - boo stream tile
+	dw spritesets_null_spriteset          ; cluster sprite 0B - unused yoshi smoke
 endif
 
 spritesets:
@@ -748,7 +759,7 @@ if !goal_sphere_on_sp0_sp1 == 0
 endif
 .wood_checkered_plats:
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
-	db $40,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $40,$00,$00,$E0,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -839,6 +850,15 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.parachute_bob_goom:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$C0,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 
 if !hijack_lm_code == 0
 level_spriteset:
@@ -922,7 +942,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
-	dw $007F,$007F,$011B,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted, wiggler
+	dw $0111,$012C,$011B,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted, wiggler
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
