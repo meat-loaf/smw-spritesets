@@ -41,8 +41,10 @@
 *128 - rock/grass platforms
 *129 - mechakoopa
 *12A - disco ball
-*12B - Bowser's bowling ball
+*12B - Bowser's bowling ball, ninji
 *12C - para bob-omb/goomba, bob-omb
 *12D - Dino Torch (body)
 *12E - Dino Torch (fire)
 *12F - Dino Rhino
+*130 - ghost house ledge hole
+*131 - hammer bro

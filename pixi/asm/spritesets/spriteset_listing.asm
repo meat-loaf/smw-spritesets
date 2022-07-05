@@ -82,8 +82,8 @@ spriteset_off_ptrs:
 	dw spritesets_monty_mole_pokey        ; sprite 4E - ledge monty mole
 	dw spritesets_piranhas                ; sprite 4F - jumpin' piranha plant
 	dw spritesets_piranhas                ; sprite 50 - jumpin' piranha plant, spits fire
-	dw spritesets_null_spriteset          ; sprite 51
-	dw spritesets_null_spriteset          ; sprite 52
+	dw spritesets_ninji                   ; sprite 51 - ninji
+	dw spritesets_ghost_house_hole        ; sprite 52 - ghost house ledge hole
 	dw spritesets_null_spriteset          ; sprite 53
 	dw spritesets_null_spriteset          ; sprite 54
 	dw spritesets_wood_checkered_plats    ; sprite 55 - horizonal checkered platform
@@ -97,7 +97,7 @@ spriteset_off_ptrs:
 	dw spritesets_rock_grass_plats        ; sprite 5D - floating grass platform
 	dw spritesets_rock_grass_plats        ; sprite 5E - grass platform, goes on forever if no buoyancy
 	dw spritesets_wood_checkered_plats    ; sprite 5F - brown platform on chain (moves when mario stands on it)
-	dw spritesets_null_spriteset          ; sprite 60
+	dw spritesets_null_spriteset          ; sprite 60 - flat switch palace switch
 	dw spritesets_spiketop_raft           ; sprite 61 - skull raft
 	dw spritesets_wood_checkered_plats    ; sprite 62 - brown line guided platform (starts on its own)
 	dw spritesets_wood_checkered_plats    ; sprite 63 - brown/checkered line guided platform (starts when jumped on)
@@ -106,13 +106,13 @@ spriteset_off_ptrs:
 	dw spritesets_line_machines           ; sprite 66 - line guided chainsaw, upside-down
 	dw spritesets_grinder                 ; sprite 67 - line guided grinder
 	dw spritesets_fuzzy                   ; sprite 68 - line guided fuzzy
-	dw spritesets_null_spriteset          ; sprite 69
-	dw spritesets_null_spriteset          ; sprite 6A
-	dw spritesets_null_spriteset          ; sprite 6B
-	dw spritesets_null_spriteset          ; sprite 6C
-	dw spritesets_null_spriteset          ; sprite 6D
-	dw spritesets_dinos                   ; sprite 6E - Dino Rhino
-	dw spritesets_dinos                   ; sprite 6F - Dino Torch
+	dw spritesets_null_spriteset          ; sprite 69 - unused
+	dw spritesets_null_spriteset          ; sprite 6A - Coin game cloud
+	dw spritesets_null_spriteset          ; sprite 6B - left wall spring board
+	dw spritesets_null_spriteset          ; sprite 6C - right wall spring board
+	dw spritesets_null_spriteset          ; sprite 6D - invisible solid block
+	dw spritesets_dinos                   ; sprite 6E - dino rhino
+	dw spritesets_dinos                   ; sprite 6F - dino torch
 	dw spritesets_monty_mole_pokey        ; sprite 70 - pokey
 	dw spritesets_super_koopas            ; sprite 71 - super koopa (swoops, red cape)
 	dw spritesets_super_koopas            ; sprite 72 - super koopa (swoops, yellow cape)
@@ -156,7 +156,7 @@ spriteset_off_ptrs:
 	dw spritesets_chucks                  ; sprite 98 - Pitchin' Chuck
 	dw spritesets_volcano_lotus           ; sprite 99 - volcano lotus
 	dw spritesets_null_spriteset          ; sprite 9A - sumo bro
-	dw spritesets_null_spriteset          ; sprite 9B - hammer bro
+	dw spritesets_amazin_flyin_hammer_bro ; sprite 9B - hammer bro
 	dw spritesets_null_spriteset          ; sprite 9C - hammer bro's flying blocks
 	dw spritesets_null_spriteset          ; sprite 9D - forest bubble
 	dw spritesets_ball_n_chain            ; sprite 9E - ball 'n' chain
@@ -165,7 +165,7 @@ spriteset_off_ptrs:
 	dw spritesets_bowling_ball            ; sprite A1 - bowser's bowling ball
 	dw spritesets_mechakoopa              ; sprite A2 - mechakoopa
 	dw spritesets_wood_checkered_plats    ; sprite A3 - single grey wood platform on chain
-	dw spritesets_null_spriteset          ; sprite A4
+	dw spritesets_floating_spike_mine     ; sprite A4 - floating spike mine
 	dw spritesets_fuzzy_and_sparky        ; sprite A5 - wall following fuzzy/sparky
 	dw spritesets_big_hothead             ; sprite A6 - large wall following hothead
 	dw spritesets_null_spriteset          ; sprite A7 - iggy's ball
@@ -410,11 +410,11 @@ endif
 
 if not(!extended_sprites_inherit_parent) || !use_extended_spriteset_table
 ext_spriteset_off_ptrs:
-	dw spritesets_null_spriteset          ; extended sprite 00
+	dw spritesets_null_spriteset          ; extended sprite 00 - empty slot
 	dw spritesets_null_spriteset          ; extended sprite 01
 	dw spritesets_null_spriteset          ; extended sprite 02
 	dw spritesets_hoppin_flame            ; extended sprite 03 - hoppin' flame baby
-	dw spritesets_null_spriteset          ; extended sprite 04
+	dw spritesets_hammer                  ; extended sprite 04 - amazin' flyin' hammer bro's hammer
 	dw spritesets_null_spriteset          ; extended sprite 05
 	dw spritesets_null_spriteset          ; extended sprite 06
 	dw spritesets_null_spriteset          ; extended sprite 07
@@ -718,7 +718,7 @@ endif ; !remap_jumpin_pplant_vine
 .ball_n_chain:
 .grinder:
 .castle_block:
-	db $00,$00,$00,$00,$00,$00,$00,$A0    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$C0,$00,$A0    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -802,9 +802,10 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.ninji:
 .bowling_ball:
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
-	db $00,$00,$60,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$60,$00,$40,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
@@ -814,7 +815,7 @@ endif
 .wiggler:
 .pballoon:
 .hoppin_flame:
-	db $00,$00,$00,$00,$00,$00,$40,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$E0,$40,$00    ; spritesets 00-07
 	db $00,$00,$00,$A0,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
@@ -859,7 +860,26 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
-
+.ghost_house_hole:
+	db $00,$00,$00,$00,$00,$A0,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.amazin_flyin_hammer_bro:
+.hammer:
+.floating_spike_mine:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$20,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 if !hijack_lm_code == 0
 level_spriteset:
 	db $00,$00,$03,$00,$00,$00,$00,$07    ; levels 0-7
@@ -936,14 +956,14 @@ spriteset_gfx_listing:
 	dw $0110,$0102,$010E,$0103,$010D,$010C,$0108,$0107		; spriteset 02: rex, banzai bill, fish, timed + carrot platforms, piranhas
 	dw $007F,$0113,$0117,$0124,$0112,$0116,$0114,$0111		; spriteset 03: dolphins, porcupuffer
 	dw $0105,$0110,$0104,$011A,$010A,$0109,$0108,$0107		; spriteset 04: all chucks, spike top, buzzy, swooper, blargg
-	dw $007F,$007F,$007F,$0106,$011E,$011D,$011C,$0110		; spriteset 05: ghost house
+	dw $011B,$0122,$0130,$0106,$011E,$011D,$011C,$0110		; spriteset 05: ghost house
 	dw $007F,$007F,$007F,$007F,$007F,$011B,$011F,$007F		; spriteset 06: lakitu, wiggler
 	dw $0124,$0123,$0122,$0121,$0120,$0119,$0118,$0110		; spriteset 07: castle -- dry bones, thwomps, climbing koopas, etc
 	dw $007F,$007F,$007F,$007F,$007F,$0111,$0127,$007F		; spriteset 08: athletic
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $0111,$012C,$011B,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted, wiggler
-	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0C: none
+	dw $007F,$007F,$007F,$007F,$007F,$012B,$0131,$007F		; spriteset 0C: flyin hammer bro, ninji/bowling ball
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0F: none

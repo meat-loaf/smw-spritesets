@@ -1,16 +1,14 @@
 * Optimize Mechakoopa GFX routine
 * Optimize Urchin GFX routine
 * Optimize Ball 'n' chain GFX routine
+* Optimize Blargg GFX routine
+* Optimize Hammer brother GFX Routine
 * Fix buggy super-koopa
 * Lakitu hardcoded OAM fix (?)
 * Sumo brother implementation
-* Hammer brother implementation
 * Forest bubble implementation
 * Grow/Shrink pipe implementation
 * Coin game cloud implementation
-* Ninji implementation
-* YI4 floating spike ball implementation
-* Ghost House ledge hole implementation
 * Castle climbing net door implementation
 * Line-guided rope machine implementation
 * Mushroom scale platforms implementation

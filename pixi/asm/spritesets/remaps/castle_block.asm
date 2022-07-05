@@ -11,8 +11,6 @@ castle_block_tiles:
 org $038EB7|!bank
 ; getdrawinfo call above
 castle_block_gfx:
-	LDA.b #$01
-	STA.w !157C,x
 	REP.b #$20
 	LDA.w #castle_block_tiles
 	STA.b $02
@@ -23,13 +21,12 @@ castle_block_gfx:
 	LDA.w #castle_block_yoff
 	STA.b $08
 	SEP.b #$20
-	JSL sub_spr_gfx_square
+
+	STZ.b $0A
+	JSL sub_spr_gfx_square_nofacing|!bank
 	RTS
 	
 castle_block_props:
 	db $03,$03,$03,$03
-
 warnpc $038EEA|!bank
-;org $038ECF|!bank
-;	JSR.w store_tile1_bank3
 
