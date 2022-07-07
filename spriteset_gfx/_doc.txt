@@ -48,3 +48,4 @@
 *12F - Dino Rhino
 *130 - ghost house ledge hole
 *131 - hammer bro
+ 132 - ancillary yoshi tiles (egg, fireball, misc 8x8s)

@@ -72,6 +72,7 @@ incsrc "remaps/volcano_lotus.asm"
 incsrc "remaps/wiggler.asm"                   ; includes extended flower
 incsrc "remaps/wood_checker_plats.asm"
 incsrc "remaps/wood_spinny_plat.asm"
+incsrc "remaps/yoshi.asm"
 
 ; cluster sprite remaps
 incsrc "remaps/cls_boos.asm"
@@ -83,6 +84,7 @@ incsrc "remaps/ext_bone.asm"
 incsrc "remaps/ext_coingame_coin.asm"
 incsrc "remaps/ext_hammer.asm"
 incsrc "remaps/ext_lotus_pollen.asm"
+incsrc "remaps/ext_yoshi_fireball.asm"
 
 ; minor extended sprite remaps
 incsrc "remaps/mex_boostream.asm"

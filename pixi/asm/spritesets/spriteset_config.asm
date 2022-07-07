@@ -1,3 +1,5 @@
+includefrom "spritesets.asm"
+
 ; hijack Lunar Magic's graphics upload to do the spriteset upload handling
 ; there, instead. As with all lunar magic hijacks, this can break between
 ; lunar magic versions if FuSoYa decides to change this code for any reason.
@@ -26,6 +28,12 @@
 
 ; put the p-balloon powerup on low part of sprite tiles
 !pballoon_on_sp0_sp1      = 0
+
+; put the yoshi egg sprite on low part of sprite tiles
+!yoshi_egg_on_sp0_sp1     = 0
+
+; put the yoshi fireball extended sprite on low part of sprite tiles
+!yoshi_fireball_on_sp0_sp1 = 0
 
 ; alternate behavior for sprite A5 (originally, the game
 ; used the sprite tilemap setting)

@@ -45,7 +45,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 29 - koopa kids
 	dw spritesets_piranhas                ; sprite 2A - upside-down piranha
 	dw spritesets_null_spriteset          ; sprite 2B - sumo bros lightning
-	dw spritesets_null_spriteset          ; sprite 2C - yoshi egg
+	dw spritesets_yoshi_egg               ; sprite 2C - yoshi egg
 	dw spritesets_null_spriteset          ; sprite 2D - baby yoshi (grn)
 	dw spritesets_spiketop_raft           ; sprite 2E - spike top
 	dw spritesets_null_spriteset          ; sprite 2F - springboard
@@ -54,7 +54,7 @@ spriteset_off_ptrs:
 	dw spritesets_dry_bones               ; sprite 32 - dry bones, stays on ledge
 	dw spritesets_null_spriteset          ; sprite 33 - podoboo
 	dw spritesets_null_spriteset          ; sprite 34 - boss fireball
-	dw spritesets_null_spriteset          ; sprite 35 - yoshi
+	dw spritesets_null_spriteset          ; sprite 35 - yoshi (note: Don't give Yoshi a spriteset without changing how his graphics routine works)
 	dw spritesets_null_spriteset          ; sprite 36 - unused sprite
 	dw spritesets_boo_booblock            ; sprite 37 - boo
 	dw spritesets_eerie_fishin_boo        ; sprite 38 - eerie
@@ -125,7 +125,7 @@ spriteset_off_ptrs:
 	dw spritesets_piranhas                ; sprite 79 - growing vine
 	dw spritesets_null_spriteset          ; sprite 7A - firework
 	dw spritesets_null_spriteset          ; sprite 7B - goal point tape
-	dw spritesets_null_spriteset          ; sprite 7C
+	dw spritesets_null_spriteset          ; sprite 7C - princess peach
 	dw spritesets_pballoon                ; sprite 7D - P-Balloon
 	dw spritesets_null_spriteset          ; sprite 7E - red flying coin
 	dw spritesets_null_spriteset          ; sprite 7F - gold 1up
@@ -427,7 +427,7 @@ ext_spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; extended sprite 0E
 	dw spritesets_null_spriteset          ; extended sprite 0F
 	dw spritesets_null_spriteset          ; extended sprite 10
-	dw spritesets_null_spriteset          ; extended sprite 11
+	dw spritesets_yoshi_fireball          ; extended sprite 11
 	dw spritesets_null_spriteset          ; extended sprite 12
 ; add your custom extended sprites here, if desired
 endif
@@ -476,7 +476,13 @@ if !remap_jumpin_pplant_vine == 0
 .piranhas:
 endif
 if !goal_sphere_on_sp0_sp1 == 1
-.goalsphere
+.goalsphere:
+endif
+if !yoshi_egg_on_sp0_sp1 == 1
+.yoshi_egg:
+endif
+if !yoshi_fireball_on_sp0_sp1 == 1
+.yoshi_fireball:
 endif
 .null_spriteset:                              ; used by sprites that don't use the system.
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
@@ -487,6 +493,23 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+if !yoshi_egg_on_sp0_sp1 == 0 || !yoshi_fireball_on_sp0_sp1 == 0
+  if !yoshi_egg_on_sp0_sp1 == 0
+.yoshi_egg:
+  endif
+  if !yoshi_fireball_on_sp0_sp1 == 0
+.yoshi_fireball:
+  endif
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$60,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+endif
+
 if !remap_koopa
 .koopas:                                      ; koopa variants
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
@@ -963,7 +986,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $0111,$012C,$011B,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted, wiggler
-	dw $007F,$007F,$007F,$007F,$007F,$012B,$0131,$007F		; spriteset 0C: flyin hammer bro, ninji/bowling ball
+	dw $007F,$007F,$007F,$007F,$0132,$012B,$0131,$0110		; spriteset 0C: flyin hammer bro, ninji/bowling ball, yoshi
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0F: none
