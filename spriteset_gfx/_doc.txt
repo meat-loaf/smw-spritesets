@@ -47,5 +47,7 @@
 *12E - Dino Torch (fire)
 *12F - Dino Rhino
 *130 - ghost house ledge hole
-*131 - hammer bro
- 132 - ancillary yoshi tiles (egg, fireball, misc 8x8s)
+*131 - hammer bro, transparent bounce tile, floating mine
+*132 - ancillary yoshi tiles (egg, fireball)
+ 133 - sumo bro
+ 134 - sumo bro lightning, lightning fire tiles

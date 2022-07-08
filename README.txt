@@ -20,6 +20,10 @@ modificationes anyhow)
 in-place to not require such a jsr/rts hijack, as I thought the performance penalty
 would simply be too high there (many sprites call these routines and then update their
 tiles accordingly).
+	Be careful when creating your own spriteset graphics: They they must be exactly
+1KB! Any larger and you risk overflowing the graphics decomp buffer and overwriting
+level data during load. There is an empty 1KB file in the spriteset_gfx directory,
+for convinence.
 
                          - Why would I use this? -
 	This system makes it reasonably easy to mix and match different sprites in
@@ -57,7 +61,8 @@ changes in an update and causes issues with the patch.
 
                          - How do I create spritesets? -
 	The main file for this is spriteset_listing.asm. Here, the offsets for each sprite are
-defined. It may be best to see how the originals are set up to understand it best. In short,
+defined. It may be best to see how the originals are set up to understand it best (note: see the
+_docs.txt tile in the spriteset_gfx directory for listings of each graphics file included). In short,
 each sprite has a pointer in the spritset_off_ptrs table to its offset table, which has an
 entry for each spriteset. All you must do is modify this offset to point to the 'row' you wish
 to assign the sprite to, then edit the spriteset_gfx_listing table in this file

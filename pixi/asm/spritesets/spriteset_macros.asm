@@ -2,6 +2,8 @@ includefrom "spritesets.asm"
 
 function pack_props(flip, priority, palette, page) = ((flip&03)<<$06)|((priority&03)<<$04)|((palette&$07)<<1)|(page&$01)
 
+function shared_spr_routines_tile_addr(spr_num) = $019B83+read1($019C7F+spr_num)
+
 macro sprite_num(operation, index)
 if not(!sa1)
 	<operation>.b $9E,<index>

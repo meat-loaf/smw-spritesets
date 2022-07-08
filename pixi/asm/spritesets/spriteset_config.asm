@@ -111,6 +111,8 @@ endif
 !cls_spriteset_offset = $9D10|!extram_bank
 ; Minor extended sprite table (12 bytes)
 !mex_spriteset_offset = $9D30|!extram_bank
+; Bounce sprites sprite table (4 bytes)
+!bnc_spriteset_offset = $9D3C|!extram_bank
 
 ; ram used to hold the current spriteset. Change as needed.
 !current_spriteset        = $5C

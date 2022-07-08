@@ -61,6 +61,7 @@ incsrc "remaps/skull_plat.asm"
 incsrc "remaps/spike_top.asm"
 incsrc "remaps/spiny.asm"
 incsrc "remaps/stinky_bubble.asm"
+incsrc "remaps/sumobro.asm"                   ; includes sumo's lightning
 incsrc "remaps/super_koopa.asm"               ; TODO not completed, buggy frames
 incsrc "remaps/swooper.asm"
 incsrc "remaps/thwimp.asm"
@@ -77,6 +78,7 @@ incsrc "remaps/yoshi.asm"
 ; cluster sprite remaps
 incsrc "remaps/cls_boos.asm"
 incsrc "remaps/cls_castle_bg_flame.asm"
+incsrc "remaps/cls_sumo_fire.asm"
 
 ; extended sprite remaps
 incsrc "remaps/ext_baseball.asm"

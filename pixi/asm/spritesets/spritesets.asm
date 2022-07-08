@@ -22,7 +22,7 @@ restore:
 	DEX                ; |
 	BPL .loop          ; /
 	JSR.w $008134|!bank
-	warnpc $009705|!bank
+warnpc $009705|!bank
 
 if read1($0FF8C6|!bank) != $22
 	error "LM Super GFX hijack not installed, or this code has changed. Install this hijack first before patching with LM hijacks."

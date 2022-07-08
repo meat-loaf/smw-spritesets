@@ -44,7 +44,7 @@ spriteset_off_ptrs:
 	dw spritesets_bigboo                  ; sprite 28 - big boo
 	dw spritesets_null_spriteset          ; sprite 29 - koopa kids
 	dw spritesets_piranhas                ; sprite 2A - upside-down piranha
-	dw spritesets_null_spriteset          ; sprite 2B - sumo bros lightning
+	dw spritesets_sumo_bro_lightning      ; sprite 2B - sumo bros lightning
 	dw spritesets_yoshi_egg               ; sprite 2C - yoshi egg
 	dw spritesets_null_spriteset          ; sprite 2D - baby yoshi (grn)
 	dw spritesets_spiketop_raft           ; sprite 2E - spike top
@@ -155,7 +155,7 @@ spriteset_off_ptrs:
 	dw spritesets_chucks                  ; sprite 97 - Puntin' Chuck
 	dw spritesets_chucks                  ; sprite 98 - Pitchin' Chuck
 	dw spritesets_volcano_lotus           ; sprite 99 - volcano lotus
-	dw spritesets_null_spriteset          ; sprite 9A - sumo bro
+	dw spritesets_sumo_bro                ; sprite 9A - sumo bro
 	dw spritesets_amazin_flyin_hammer_bro ; sprite 9B - hammer bro
 	dw spritesets_null_spriteset          ; sprite 9C - hammer bro's flying blocks
 	dw spritesets_null_spriteset          ; sprite 9D - forest bubble
@@ -903,6 +903,16 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
+.sumo_bro:
+.sumo_bro_lightning:
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 00-07
+	db $00,$00,$00,$00,$80,$00,$00,$00    ; spritesets 08-0F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 18-1F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 20-27
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 28-2F
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
+	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 if !hijack_lm_code == 0
 level_spriteset:
 	db $00,$00,$03,$00,$00,$00,$00,$07    ; levels 0-7
@@ -986,7 +996,7 @@ spriteset_gfx_listing:
 	dw $007F,$007F,$0110,$010F,$010A,$0128,$0108,$0107		; spriteset 09: underground with diggin chucks
 	dw $007F,$007F,$007F,$007F,$012B,$012A,$0129,$007F		; spriteset 0A: mechakoopa
 	dw $0111,$012C,$011B,$0115,$012F,$012E,$012D,$0110		; spriteset 0B: dinos, torpedo ted, wiggler
-	dw $007F,$007F,$007F,$007F,$0132,$012B,$0131,$0110		; spriteset 0C: flyin hammer bro, ninji/bowling ball, yoshi
+	dw $007F,$007F,$0134,$0133,$0132,$012B,$0131,$0110		; spriteset 0C: flyin hammer bro, ninji/bowling ball, yoshi
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0D: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0E: none
 	dw $007F,$007F,$007F,$007F,$007F,$007F,$007F,$007F		; spriteset 0F: none
