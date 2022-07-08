@@ -86,7 +86,8 @@ row. This will break a number of the original sprites graphics routines.
                          - Does it work with custom sprites? -
 	Yes, but it currently requires some modification to PIXI's code. (See the 'How do I install it?'
 section above.
-	Custom sprites need to be (gently) modified to be aware of the system, of course.
+	Custom sprites need to be (gently) modified to be aware of the system, of course. See an included
+example (imamelia's SMB3 nipper sprite). Look for the tilemap table and right before we store to $0303,y.
  It's generally no more difficult than remapping the sprite as in the old system, except you must
 map your sprite onto one (or a set) of 1KB files instead, and you must add the tile offset from the
 defined RAM address when the sprite's OAM tiles are written (look for stores to $302 (+4x) and

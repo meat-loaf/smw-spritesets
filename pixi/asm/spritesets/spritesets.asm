@@ -278,6 +278,11 @@ mexsprite_spawn_bank2:
 %altsprite_spawn($17F0|!addr,!mex_spriteset_offset, \
                  !minorextended_sprites_inherit_parent, "!spriteset_offset,x", \
                  !mex_off_on_wram_mirror,mex_sprset_init|!bank, RTS)
+
+;bounce_spawn_bank2:
+;	STA.w $1699|!addr,x
+;	
+;	RTS
 warnpc $02D580|!bank
 
 ;; bank 03 hijacks ;;

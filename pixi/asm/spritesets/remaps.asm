@@ -90,3 +90,5 @@ incsrc "remaps/ext_yoshi_fireball.asm"
 
 ; minor extended sprite remaps
 incsrc "remaps/mex_boostream.asm"
+
+incsrc "remaps/bounce_sprites.asm"
