@@ -344,7 +344,7 @@ sprset_init:
 	PHX
 
 	LDA.b #spritesets>>16
-	STA.b $8C
+	STA.b $8F
 
 if !pixi_installed
 	LDA   !extra_bits,x
@@ -359,7 +359,6 @@ if !pixi_installed
 	BRA.b .custom_done
 endif
 .notcustom:
-;	LDA !9E,x
 	%sprite_num(LDA,x)
 	REP #$30
 	AND #$00FF
@@ -367,10 +366,10 @@ endif
 	TAX
 	LDA.l spriteset_off_ptrs,x
 .custom_done
-	STA.b $8A
+	STA.b $8D
 	SEP #$30
 	LDY   !current_spriteset
-	LDA.b [$8A],y
+	LDA.b [$8D],y
 	PLX
 	STA   !spriteset_offset,x
 	PLY
