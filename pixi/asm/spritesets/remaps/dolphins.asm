@@ -54,13 +54,10 @@ horz_dolphins:
 	LSR   #3
 	TAX
 	LDA.w dolphin_head_tiles,x
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	LDA.w dolphin_body_tiles,x
-	ADC.b !tile_off_scratch
 	STA.w $0306|!addr,y
 	LDA.w dolphin_tail_tiles,x
-	ADC.b !tile_off_scratch
 	STA.w $030A|!addr,y
 	LDX.w $15E9|!addr
 	LDA.w !15F6,x
@@ -71,13 +68,13 @@ horz_dolphins:
 	STA.w $030B|!addr,y
 	; tile y pos
 	LDA.b $01
-	STA $0301|!addr,y
-	STA $0305|!addr,y
-	STA $0309|!addr,y
+	STA.w $0301|!addr,y
+	STA.w $0305|!addr,y
+	STA.w $0309|!addr,y
+	LDY.b #$02
 	LDA.b #$02
-	; jumped to below, bytes needed here
-	; LDY.b #$02
-	JMP.w $02B7A5|!bank
+	JSL.l finish_oam_write|!bank
+	RTS
 vert_dolphins:
 	LDA.b $14
 	AND.b #$04

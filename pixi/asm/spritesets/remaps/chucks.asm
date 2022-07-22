@@ -45,28 +45,6 @@ org $02CB7C|!bank
 ; original
 ;	db $AD
 
-; chuck: head tile store
-org $02C8F9|!bank
-	JSR.w store_tile1_bank2
-; all chucks: body tile store 1
-org $02CA65|!bank
-	JSR.w store_tile1_bank2
-; all chucks: body tile store 2
-org $02CA6B|!bank
-	JSR.w store_tile2_bank2
-; clappin chuck tile store - hand tile
-org $02CAD9|!bank
-	JSR.w store_tile1_bank2
-	; A already has the tile number, guess we draw two of the same.
-	STA.w $0306|!addr,y
-; chargin chuck tile store - shoulder
-org $02CB18|!bank
-	JSR.w store_tile1_bank2
-
-; pitchin chuck tile store - baseball
-org $02CB7D|!bank
-	JSR.w store_tile1_bank2
-
 ; pitchin' chuck baseball spawn
 org $02C47B|!bank
 	JSR.w extsprite_spawn_bank2
@@ -77,8 +55,3 @@ org $02CB9B|!bank
 	db $6E
 	; shovel horiz, shovel out
 	db $60,$62
-
-; diggin chuck tile store: shovel/shoulder tile
-org $02CBEA|!bank
-	LDA $CB9B,x
-	JSR.w store_tile1_bank2

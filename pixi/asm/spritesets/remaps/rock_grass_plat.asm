@@ -20,12 +20,10 @@ rockplat_gfx:
 .nowide
 	LDA.w !15F6,x
 	STA.b $03
-	;LDA.b $E4,x
 	%sprite_x_low(LDA,x)
 	SEC
 	SBC.b $1A
 	STA $05       ; is this the same as $00 after getdrawinfo?
-	;LDA.b $D8,x
 	%sprite_y_low(LDA,x)
 	SEC
 	SBC.b $1C
@@ -68,8 +66,6 @@ rockplat_gfx:
 	ADC.b #$08
 	STA.b $05
 	LDA.w $01B383|!bank,x
-	CLC
-	ADC.b !tile_off_scratch
 	STA $0302|!addr,y
 	LDA.b $01
 	CMP.b $02
@@ -92,12 +88,9 @@ rockplat_gfx:
 	LDY.w !15EA,x
               ; tile number of the top center of the grass platform (for long plat)
 	LDA.b #$06
-	CLC
-	ADC.b !tile_off_scratch
 	STA.w $0312|!addr,y
               ; tile number of the bottom center of the grass platform (for long plat)
 	LDA.b #$09
-	ADC !tile_off_scratch
 	STA $030E|!addr,y
 .done:
 	LDY.b $00

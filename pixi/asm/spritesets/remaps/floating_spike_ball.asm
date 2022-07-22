@@ -3,4 +3,3 @@ includefrom "remaps.asm"
 !mine_tile = $0C
 org $01B686|!bank
 	db !mine_tile
-	JSR.w store_tile1_bank1|!bank

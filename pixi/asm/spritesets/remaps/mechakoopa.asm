@@ -20,19 +20,8 @@ org $03B32F|!bank
 	; bottom leftmost, right
 	db $0C,$0E,$1C,$0D
 
-; mechakoopa body tile store
-; todo| there's probably enough room here to add the tileoffset in
-; todo| without the JSR, and to optimize drawing the key
-org $03B3CE|!bank
-	JSR.w store_tile1_bank3
-
 ; mechakoopa: wind up key frames
 org $03B3EF|!bank
 	db $F9,$0F,$4D,$0D
 org $03B3F3
 	db $0F,$02,$12,$02
-
-; mechakoopa: key tile store
-org $03B42F|!bank
-	JSR.w store_tile1_bank3
-

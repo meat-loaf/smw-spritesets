@@ -1,6 +1,8 @@
 incsrc "spriteset_config.asm"
 incsrc "spriteset_macros.asm"
 
+incsrc "finish_oam_write.asm"
+
 ;; bank 00 hijacks ;;
 
 ; hijack gamemode 11 to do spriteset graphics upload
@@ -34,7 +36,7 @@ org $0FF8C6|!bank
 endif
 
 ;; bank 01 hijacks ;;
-; replace brown spinning platform main, it doesnt call getdrawinfo
+; replace brown spinning platform main
 %replace_wide_pointer($01868A|!bank,brown_plat_main)
 
 ; subspr gfx 0 optimization
@@ -44,7 +46,6 @@ org $019CFC|!bank
 	CLC
 	ADC.b $01
 	STA.b $01
-;	LDY   !9E,x
 	%sprite_num(LDY,x)
 	LDA.w !1602,x
 	ASL   #2
@@ -57,13 +58,13 @@ org $019CFC|!bank
 	LDA.b #$03
 	STA.b $04
 subspr_gfx0_drawloop:
-	; move tile store up: skip carry clear due to ASL above, and
+	; skip carry clear due to ASL above, and
 	; ASL for props after should ensure its clear on loop iters)
 	LDA.b $02
 	ADC.b $04
 	TAX
 	LDA.w $019B83|!bank,x
-	ADC.b !tile_off_scratch
+;	ADC.b !tile_off_scratch
 	LDX.b $04
 	STA.w $0302|!addr,y
 	LDA.b $00
@@ -86,18 +87,17 @@ subspr_gfx0_drawloop:
 	LDX.w $15E9|!addr
 	LDA.b #$03
 	LDY.b #$00
-	JMP.w $01B7BB|!bank
+	JMP.w _finish_oam_write
 warnpc $019D5F|!bank
 
 spr_tmap_off = $019C7F|!bank
 spr_tiles    = $019B83|!bank
 org $019D67|!bank
 SubSprGFX1:
-	; get draw info
-	JSR.w $01A365|!bank
+;	JSR.w $01A365|!bank
+	JSR.w getdrawinfo_generic_prefix|!bank
 	LDA.w !15F6,x
 	STA.b $02
-;	LDA   !9E,x
 	%sprite_num(LDA,x)
 	CMP.b #$0F
 	BCS .nostdsprite
@@ -106,7 +106,6 @@ SubSprGFX1:
 	INY #4
 .nostdsprite
 	STY.b $05
-	;LDY   !9E,x
 	%sprite_num(LDY,x)
 	LDA.w !1602,x
 	ASL
@@ -176,6 +175,8 @@ extsprite_spawn_bank1:
 warnpc $019E0D|!bank
 
 ; subsprgfx 2 optimization
+org $019F0F|!bank
+	JSR.w getdrawinfo_generic_prefix|!bank
 org $019F27|!bank
 	; carry cleared at $019F1C, we get to save a (needed) byte
 	ADC.b !tile_off_scratch
@@ -206,33 +207,23 @@ org $019F27|!bank
 	JMP.w $A3DF
 warnpc $019F5B|!bank
 
-org $01A3DC|!bank
-	JMP.w getdrawinfo_bank1_hijack
-
-org $01CD1E|!bank
-getdrawinfo_bank1_hijack:
-	%getdrawinfo_hijack(!tile_off_scratch, RTS)
-warnpc $01CD2A|!bank
-
 ; this space is freed by the fish being fully remapped onto SP3/4.
 org $01B110|!bank
 store_tile1_bank1:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
-store_tile2_bank1:
-	%storetile_hijack(!tile_off_scratch,$0306|!addr,RTS)
-store_tile3_bank1:
-	%storetile_hijack(!tile_off_scratch,$030A|!addr,RTS)
+
+; a couple of the generic gfx routines don't use finishoamwrite,
+; so we supplement here
+getdrawinfo_generic_prefix:
+	LDA   !spriteset_offset,x
+	STA.b !tile_off_scratch
+	JMP.w $01A365|!bank
 warnpc $01B129|!bank
 
 ;; bank 02 hijacks ;;
 
-org $02D3E4|!bank
-	JMP.w getdrawinfo_bank2_hijack
-
 ; free data in bank 02
 org $02D51E|!bank
-getdrawinfo_bank2_hijack:
-	%getdrawinfo_hijack(!tile_off_scratch, RTS)
 store_tile1_bank2:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
 store_tile2_bank2:
@@ -285,16 +276,8 @@ mexsprite_spawn_bank2:
 ;	RTS
 warnpc $02D580|!bank
 
-;; bank 03 hijacks ;;
-
-; bank3 getdrawinfo
-org $03B7CC|!bank
-	JMP.w getdrawinfo_bank3_hijack
-
 ;; bank 03 freespace
 org $03D6AC|!bank
-getdrawinfo_bank3_hijack:
-	%getdrawinfo_hijack(!tile_off_scratch, RTS)
 store_tile1_bank3:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
 ; TODO maybe just move the cloud tile into the spriteset

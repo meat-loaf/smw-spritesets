@@ -35,13 +35,6 @@ org <location>
 pullpc
 endmacro
 
-macro getdrawinfo_hijack(scratch, return)
-	STA.b $01
-	LDA   !spriteset_offset,x
-	STA   <scratch>
-	<return>
-endmacro
-
 macro storetile_hijack(scratch, oam, return)
 	CLC : ADC <scratch>
 .tile_store:

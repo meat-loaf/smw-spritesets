@@ -1,32 +1,24 @@
 includefrom "remaps.asm"
 
+!magikoopa_wand_tile            = $1B
+
+!magikoopas_magic_circle_tile   = $0A
+!magikoopas_magic_square_tile   = $0B
+!magikoopas_magic_triangle_tile = $1A
+
 ; magikoopa
 org $019BF6|!bank
 	db $00,$02,$00,$02,$06,$08,$06,$08
 	db $00,$02,$00,$02
 
-; magikoopa's wand tile
 org $01BF05|!bank
-	db $1B
-org $01BF06|!bank
-	JSR.w store_tile3_bank1
+	db !magikoopa_wand_tile
 
-org $01BD82|!bank
-	JML.l magikoopa_magic_tilestore
-pullpc
-magikoopa_magic_tilestore:
-	      ; this is the circle tile
-	LDA.b #$0A
-	CLC
-	ADC.b !tile_off_scratch
-	STA $0302|!addr,y
-	      ; this is the square tile
-	LDA.b #$0B
-	ADC.b !tile_off_scratch
-	STA $0306|!addr,y
-	      ; this is the triangle tile
-	LDA.b #$1A
-	ADC.b !tile_off_scratch
-	STA $030A|!addr,y
-	JML.l $01BD91|!bank
-pushpc
+org $01BD83|!bank
+	db !magikoopas_magic_circle_tile
+
+org $01BD88|!bank
+	db !magikoopas_magic_square_tile
+
+org $01BD8D|!bank
+	db !magikoopas_magic_triangle_tile

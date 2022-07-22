@@ -6,6 +6,7 @@ org $019B83+(read1($019C7F+$1D))|!bank
 org $018F8E|!bank
 	JSR.w extsprite_spawn_bank1
 
+; ext flame remap
 org $02A217|!bank
 	db $1D,$0D
 org $02A243|!bank

@@ -23,9 +23,6 @@ org $01C19E|!bank
 org $01C1A2|!bank
 	db $02
 
-; growing vine tilestore
-org $01C1A3|!bank
-	JSR.w store_tile1_bank1
 ; 166E vals
 org ($07F3FE+$4F)|!bank
 	db $09,$09
@@ -51,10 +48,6 @@ org $01C19E
 	db $AC
 org $01C1A2
 	db $AE
-
-; growing vine tilestore
-org $01C1A3|!bank
-	STA.w $0302|!addr,y
 
 ; 166E vals
 org ($07F3FE+$4F)|!bank

@@ -12,10 +12,6 @@ org $01E923|!bank
 ; lakitu's cloud smiley face
 org $01E976|!bank
 	db $15
-; lakitu's cloud smiley face tile store
-; TODO writes to oam slot 8 (hardcoded)
-;org $01E923|!bank
-;	JSR.w store_tile1_bank1
 
 ; fishin' lakitu: fishin' rod
 org $02E6A8|!bank

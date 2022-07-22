@@ -1,7 +1,7 @@
 includefrom "remaps.asm"
 
 ; bony beetle tilemap
-org $019C2D|!bank
+org shared_spr_routines_tile_addr($31)
 	db $20,$22,$24,$26
 
 ; crumbling bones tile, frame 1
@@ -10,9 +10,19 @@ org $01E454|!bank
 ; crumbling bones tile, frame 2
 org $01E45E|!bank
 	db $0C
-; crubling tile store
-org $01E462|!bank
-	JSR.w store_tile1_bank1
+
+dry_bones:
+org $01E465|!bank
+	BRA.b .cont
+	NOP   #4
+.cont:
+	LDA.w !157C,x
+	TAX
+	LDA.w $0300|!addr,y
+	CLC
+	ADC.w $01E43C|!bank,x
+	LDX.w $15E9|!addr
+warnpc $01E479|!bank
 
 ; init extended bone spriteset offset
 org $03C463|!bank
@@ -25,5 +35,3 @@ org $03C3CE|!bank
 	db $FF,$00,$02,$FF,$00,$04,$2A,$00
 	db $06
 
-org $03C438|!bank
-	JSR.w store_tile1_bank3

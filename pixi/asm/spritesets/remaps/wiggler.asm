@@ -12,8 +12,8 @@ org $02F0D8|!bank
 
 org $02F103|!bank
 ; free space
-fillbyte $FF
-fill $0D
+fillbyte $EA ; NOP
+fill $13
 wiggler_segment_buff_offs:
 	db $00,$1E,$3E,$5E,$7E
 wiggler_segment_yoffs:
@@ -79,8 +79,6 @@ wiggler_gfx:
 	LDX.b $06
 	LDA.w wiggler_body_tiles,x
 .draw_head:
-	CLC
-	ADC.b !tile_off_scratch
 	LDY.b $0A
 	STA.w $0302|!addr,y
 	LDA.b $07
@@ -103,8 +101,6 @@ wiggler_gfx:
 	ORA.w !157C,x           ; horz facing dir
 	TAX
 	LDA.w wiggler_small_tiles,x
-	CLC
-	ADC !tile_off_scratch
 	STA.w $0302|!addr,y
 	; carry clear free from above: won't overflow
 	LDA $0304|!addr,y
