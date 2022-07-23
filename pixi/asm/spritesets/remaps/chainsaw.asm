@@ -7,10 +7,7 @@ chainsaw_motor_tiles:
 !chainsaw_tile_center = $08
 !chainsaw_props_motor = $37
 
-; there's really no need to change the bank byte here, so we neglect
-; to do so and schlorp up those free bytes. not as many as would be nice
-; due to suboffscreen's implementation
-; if there's another byte here the PHX/PLX combo can be replaced with LDX $15E9
+; there's really no need to change the bank byte here, so we don't.
 org $03C263|!bank
 chainsaw_gfx:
 	; support for suboffscreen's destructive return
@@ -19,7 +16,6 @@ chainsaw_gfx:
 .self:
 	JSR.w $03B760|!bank
 	; push current sprite slot
-	PHX
 	%sprite_num(LDA,x)
 	TAX
 	; the original routine subtracted 65 from the index,
@@ -50,26 +46,21 @@ chainsaw_gfx:
 	ADC.b $03
 	STA.w $0309|!addr,y
 	LDA.b $14
-	; AND first and we can guarantee carry clear for free
 	AND.b #$0C
 	LSR   #2
 	TAX
 	LDA.l chainsaw_motor_tiles|!bank,x
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	LDA.b #!chainsaw_tile_center
-	ADC.b !tile_off_scratch
 	STA.w $0306|!addr,y
 	LDA.b #!chainsaw_tile_top
-	ADC.b !tile_off_scratch
 	STA.w $030A|!addr,y
 	LDA.b #!chainsaw_props_motor
 	STA.w $0303|!addr,y
 	LDA.b $04
 	STA.w $0307|!addr,y
 	STA.w $030B|!addr,y
-	; pull sprite index
-	PLX
+	LDX $15E9|!addr
 	LDY.b #$02
 	; sneaky way to save a byte and a cycle; from the original
 	TYA

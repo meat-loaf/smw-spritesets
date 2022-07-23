@@ -31,10 +31,6 @@ sumo_bro_tiles:
 warnpc $02DE26|!bank
 
 ; TODO revisit
-org $02DE7B|!bank
-	JSR.w store_tile1_bank2|!bank
-
-; TODO revisit
 ; sumo bro lightning cluster spawn
 org $02DF85|!bank
 sumo_lightning_spawn:

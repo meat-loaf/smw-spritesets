@@ -8,26 +8,24 @@ incsrc "finish_oam_write.asm"
 ; hijack gamemode 11 to do spriteset graphics upload
 ; note: uberasm's hijack is too late to do this, as sprite inits have already run.
 org $0096F8|!bank
+ss_hijack:
 if !hijack_lm_code == 0
         ; original music upload routine
-	; TODO check if amk hijacks here
 	JSR.w $008134|!bank
 autoclean \
-	JML spriteset_setup_nolm
+	JML.l spriteset_setup_nolm|!bank
 	warnpc $009705|!bank
 else
-restore:
-	LDX #$07           ; \
-.loop:                     ; | restore original code
-	LDA.b $1A,x        ; |
-	STA $1462|!addr,x  ; |
-	DEX                ; |
-	BPL .loop          ; /
+	JML.l ss_set_spriteset|!bank
+	NOP #6
+.done:
 	JSR.w $008134|!bank
 warnpc $009705|!bank
 
 if read1($0FF8C6|!bank) != $22
 	error "LM Super GFX hijack not installed, or this code has changed. Install this hijack first before patching with LM hijacks."
+else
+	!exgfx_table #= read3($0FF7FF)
 endif
 ; orignally, a call to the LM code that decompresses graphics files after
 ; pulling the graphics file number from a long pointer at $8A
@@ -226,8 +224,6 @@ warnpc $01B129|!bank
 org $02D51E|!bank
 store_tile1_bank2:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
-store_tile2_bank2:
-	%storetile_hijack(!tile_off_scratch,$0306|!addr,RTS)
 ; a handful of sprites save the needed space in their routines by jumping to here.
 call_finoamwrite_large_bank2:
 	LDY.b #$02
@@ -280,15 +276,6 @@ warnpc $02D580|!bank
 org $03D6AC|!bank
 store_tile1_bank3:
 	%storetile_hijack(!tile_off_scratch,$0302|!addr,RTS)
-; TODO maybe just move the cloud tile into the spriteset
-fishin_boo_tilestore_bank3:
-	CPX.b #$02
-	BCC.b store_tile1_bank3_tile_store
-	CPX.b #$04
-	BCC.b store_tile1_bank3
-	CPX.b #$06
-	BCC.b store_tile1_bank3_tile_store
-	BRA.b store_tile1_bank3
 extsprite_spawn_bank3:
 %altsprite_spawn($170B|!addr,!ext_spriteset_offset, \
                  !extended_sprites_inherit_parent, "!spriteset_offset,x", \
@@ -357,71 +344,6 @@ endif
 	STA   !spriteset_offset,x
 	PLY
 	RTL
-
-; Arguments:
-; $00 tile x offset base (byte)
-; $01 tile y offset base (byte)
-; $02 pointer to tiles table (word)
-; * table should have 4 entries for each animation frame
-; $04 pointer to props table (word)
-; * props for each tile, 4 bytes total. x flip is or'd in.
-; $06 pointer to xoff table (word): should be 5 bytes. Index is shifted by 1 if x-flipped
-; $08 pointer to yoff table (word)
-; $157C,x: Horizontal facing direction
-; $1602,x: Animation frame.
-; Y: OAM Index
-; $0A is clobbered.
-sub_spr_gfx_square:
-	LDA.w !157C,x
-	EOR.b #$01
-	CLC
-	ROR   #3
-	STA.b $0A               ; facing dir
-
-	LDA.w !157C,x
-	EOR.b #$01
-	ROR
-	LDA.b $06
-	ADC.b #$00
-	STA.b $06
-	BCC .nofacing
-	INC $07
-.nofacing:
-	LDA.w !1602,x
-	ASL   #2
-	ADC.b $02               ; \ offset table
-	BCC +                   ; | to point at animation frame
-	INC.b $03               ; / (1 frame is 4 tiles)
-+
-	STA.b $02
-
-	TYX
-	LDY.b #$03
-; NOTE: in the below, x is the OAM index and Y is the current
-; tile index we are drawing!
-.loop:
-	LDA.b ($02),y           ; tile number
-	CLC
-	ADC.b !tile_off_scratch
-	STA.w $0302|!addr,x
-	LDA.b ($04),y           ; tile prop
-	ORA.b $0A
-	ORA.b $64
-	STA.w $0303|!addr,x
-	LDA.b ($08),y           ; y off
-	ADC.b $01
-	STA.w $0301|!addr,x
-	LDA.b ($06),y           ; x off
-	CLC
-	ADC.b $00
-	STA.w $0300|!addr,x
-	INX #4
-	DEY
-	BPL.b .loop
-	LDX.w $15E9|!addr
-	LDA.b #$03
-	LDY.b #$02
-	JML.l finish_oam_write|!bank
 if !cluster_sprites_inherit_parent
 sprset_cluster_init_inherit:
 	STA $1892|!addr,x
@@ -471,12 +393,12 @@ endif
 
 if !hijack_lm_code == 0
 spriteset_setup_nolm:
-	LDX #$07           ; \
-.loop:                     ; | restore hijacked code
-	LDA.b $1A,x        ; |
-	STA $1462|!addr,x  ; |
-	DEX                ; |
-	BPL .loop          ; /
+	LDX.b #$07           ; \
+.loop:                       ; | restore hijacked code
+	LDA.b $1A,x          ; |
+	STA.w $1462|!addr,x  ; |
+	DEX                  ; |
+	BPL.b .loop          ; /
 
 	REP.b #$10
 	LDX.w $010B|!addr
@@ -485,6 +407,34 @@ spriteset_setup_nolm:
 	SEP.b #$10
 	JML.l $009705|!bank
 else
+; pull spriteset before sprite inits run. By default, it uses the low byte of the SP3 graphics
+; file number to determine the spriteset.
+ss_set_spriteset:
+	LDX.b #$07           ; \
+.loop:                       ; | restore hijacked code
+	LDA.b $1A,x          ; |
+	STA.w $1462|!addr,x  ; |
+	DEX                  ; |
+	BPL.b .loop          ; /
+
+	LDA.b #(!exgfx_table>>16)
+	STA.b $8C
+	REP.b #$30
+	LDA.w #!exgfx_table
+	STA.b $8A
+	LDA.w $010B
+	ASL   #5
+	CLC
+	ADC.w #$0012                  ; SP3 graphics file index
+	TAY
+	LDA.b [$8A],y
+	CMP.w #$007F
+	BNE.b .spriteset_ok
+	LDA.w #$0000
+.spriteset_ok
+	SEP.b #$30
+	STA !current_spriteset
+	JML.l ss_hijack_done|!bank
 ; AXY are 16 bit here. $8A contains a pointer to the level's ExGFX list, and Y
 ; is the index to the current file to be uploaded. We will use the lower 8 bits
 ; of the SP3 ExGFX file number as the spriteset number. The others can be used
@@ -506,50 +456,13 @@ spriteset_setup_lm:
 	CMP.b #$12
 	BNE.b .skip
 	CPY.w #$0012          ; SP3 index
-	BEQ.b .set_spriteset_and_upload
+	BEQ.b .ss_continue
 	CPY.w #$0010          ; SP4 index
-	BEQ.b .skip_set_spriteset
-	; if neither, fall through to original code (decomp gfx)
+	BEQ.b .ss_continue
 .skip:
 	PLP : PLA : PLY : PLX
 	JML.l $0FF900|!bank
-.set_spriteset_and_upload:
-	; already have 8-bit A here
-	; low byte of graphics file number (only used for SP3)
-	LDA.b [$8A],y
-	STA   !current_spriteset
-; since this runs in gamemode 12, sprites that are on screen when the level
-; loads initially (in gamemode 11) need their tile offsets actually set up.
-.fix_sprites:
-	SEP.b #$10
-	LDX.b #!num_sprites-1
-.spr_loop:
-	LDA.w !14C8,x
-	BEQ.b .next
-	JSL.l sprset_init
-.next:
-	DEX
-	BPL.b .spr_loop
-	LDX.b #$13
-; same issue with cluster sprites, as they can be initialized
-; on load as well (Boo buddy circle, other ghost generators)
-.cls_loop:
-	LDA.w $1892|!addr,x
-	BEQ.b .cls_next
-if !cluster_sprites_inherit_parent
-	JSL.l sprset_cluster_init_inherit|!bank
-else
-	PHY
-	TXY
-	JSL.l cls_sprset_init|!bank
-	TYX
-	PLY
-endif
-.cls_next
-	DEX
-	BPL.b .cls_loop
-	REP.b #$10
-.skip_set_spriteset:
+.ss_continue:
 	TYX
 	LDY.w #$0003
 	LDA !current_spriteset

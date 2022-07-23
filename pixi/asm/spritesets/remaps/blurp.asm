@@ -7,5 +7,7 @@ org $0384DD|!bank
 	db !blurp_tile_mclosed
 org $0384E1|!bank
 	db !blurp_tile_mopen
+
+; tilestore after generic graphics routine
 org $0384E2
 	JSR.w store_tile1_bank3

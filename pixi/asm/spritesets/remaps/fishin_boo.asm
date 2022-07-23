@@ -10,7 +10,3 @@ org $039160|!bank
 ; fishin' boo's fire
 org $039174|!bank
 	db $0A,$0C,$0A,$0C
-
-; fishin' boo tile store
-org $0391B4|!bank
-	JSR.w fishin_boo_tilestore_bank3

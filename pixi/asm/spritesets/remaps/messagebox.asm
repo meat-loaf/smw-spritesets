@@ -4,6 +4,8 @@ if !remap_message_box
 ; message box tile
 org $038DB0|!bank
 	db $08
+
+; generic sprgfx routine call into tile update
 org $038DB1|!bank
 	JSR.w store_tile1_bank3
 

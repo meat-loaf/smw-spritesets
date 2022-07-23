@@ -21,7 +21,6 @@ init:
     RTL
 
 SpriteSetHandler:
-	WDM
 	PHP
 	LDA !current_spriteset
 	REP #$30

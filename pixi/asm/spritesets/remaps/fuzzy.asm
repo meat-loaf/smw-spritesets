@@ -14,7 +14,6 @@ fuzz_gfx_hijack:
 	LSR   #2
 	TAX
 	LDA.b #!fuzzy_tile
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	LDA.w $01DC09|!bank,x
 	ORA.b $64
@@ -29,8 +28,6 @@ warnpc $01DC0A|!bank
 org $02BE5B|!addr
 wall_fuzz:
 	LDA.b #!fuzzy_tile
-	CLC
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 if !wall_fuzzy_alt_behav
   if !have_extra_bits && !wall_fuzzy_alt_exbit
