@@ -86,10 +86,10 @@ row. This will break a number of the original sprites graphics routines.
                          - Does it work with custom sprites? -
 	Yes, but it currently requires some modification to PIXI's code. (See the 'How do I install it?'
 section above.
-	Custom sprites need to be (gently) modified to be aware of the system, of course. See an included
-example (imamelia's SMB3 nipper sprite). Look for the tilemap table and right before we store to $0303,y.
- It's generally no more difficult than remapping the sprite as in the old system, except you must
-map your sprite onto one (or a set) of 1KB files instead, and you must add the tile offset from the
-defined RAM address when the sprite's OAM tiles are written (look for stores to $302 (+4x) and
-similar). You also need togive your custom sprite index an entry in the spriteset_off_ptrs table
+	Custom sprites need only their tilemap to be modified to be aware of the system. A provided modification
+to FinishOAMWrite is provided that will apply the tilemap offset you define in spriteset_listing.asm.
+ It's no more difficult than remapping the sprite as in the old system, except you must
+map your sprite onto one (or a set) of 1KB files instead. That is to say, assume your tiles
+are in the top row of SP3 while you are remapping your sprite.
+ You also need togive your custom sprite index an entry in the spriteset_off_ptrs table
 (the comments should help you find the relevant index)
