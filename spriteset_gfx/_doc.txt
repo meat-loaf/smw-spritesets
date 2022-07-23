@@ -46,7 +46,7 @@
 *12D - Dino Torch (body)
 *12E - Dino Torch (fire)
 *12F - Dino Rhino
-*130 - ghost house ledge hole
+*130 - ghost house ledge hole, mushroom scale platform, growing pipe, forest bubble
 *131 - hammer bro, transparent bounce tile, floating mine
 *132 - ancillary yoshi tiles (egg, fireball)
 *133 - sumo bro

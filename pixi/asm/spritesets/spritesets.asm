@@ -265,7 +265,6 @@ mexsprite_spawn_bank2:
 %altsprite_spawn($17F0|!addr,!mex_spriteset_offset, \
                  !minorextended_sprites_inherit_parent, "!spriteset_offset,x", \
                  !mex_off_on_wram_mirror,mex_sprset_init|!bank, RTS)
-
 ;bounce_spawn_bank2:
 ;	STA.w $1699|!addr,x
 ;	
@@ -287,27 +286,6 @@ mexsprite_spawn_bank3:
 warnpc $03D700|!bank
 
 ;; bank 07 hijacks ;;
-
-org $07F78B|!bank
-; originally, this routine preserved Y, but doesnt use it itself.
-; we get the JSL we want 'for free' by removing pushing Y as we then
-; have a 'tidied' stack, so we just go right into loading the tweaker bytes
-; instead of JSLing to the routine like the game originally did.
-load_sprite_tables:
-	PHX
-	%sprite_num(LDA,x)
-	TAX
-	LDA.l $07F3FE,x
-	AND.b #$0F
-	PLX
-	STA.w !15F6,x
-;autoclean \
-;	JSL.l sprset_init
-	BRA load_tweaker_bytes : NOP
-warnpc $07F7A0|!bank
-org $07F7A0|!bank
-load_tweaker_bytes:
-
 
 if !pixi_installed == 1
 org $07F77F|!bank

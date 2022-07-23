@@ -74,7 +74,7 @@ spriteset_off_ptrs:
 	dw spritesets_chucks                  ; sprite 46 - diggin' chuck
 	dw spritesets_fish                    ; sprite 47 - magic fish
 	dw spritesets_chucks                  ; sprite 48 - diggin' chuck's rock
-	dw spritesets_null_spriteset          ; sprite 49 - dong pipe
+	dw spritesets_growing_pipe            ; sprite 49 - growing pipe
 	dw spritesets_goalsphere              ; sprite 4A - goal sphere
 	dw spritesets_lakitu_spiny            ; sprite 4B - pipe lakitu
 	dw spritesets_null_spriteset          ; sprite 4C
@@ -144,7 +144,7 @@ spriteset_off_ptrs:
 	dw spritesets_null_spriteset          ; sprite 8C - side exit/yoshi house smoke generator
 	dw spritesets_null_spriteset          ; sprite 8D - ghost house exit sign/door
 	dw spritesets_null_spriteset          ; sprite 8E - 'warp hole' blocks
-	dw spritesets_null_spriteset          ; sprite 8F - mushroom platforms
+	dw spritesets_mush_scale_plat         ; sprite 8F - mushroom platforms
 	dw spritesets_smashplayers            ; sprite 90 - gas bubble
 	dw spritesets_chucks                  ; sprite 91 - Chargin' Chuck
 	dw spritesets_chucks                  ; sprite 92 - Splittin' Chuck
@@ -885,6 +885,9 @@ endif
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 30-37
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 38-3F
 .ghost_house_hole:
+.growing_pipe:
+.mush_scale_plat:
+.forest_bubble:
 	db $00,$00,$00,$00,$00,$A0,$00,$00    ; spritesets 00-07
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 08-0F
 	db $00,$00,$00,$00,$00,$00,$00,$00    ; spritesets 10-17
