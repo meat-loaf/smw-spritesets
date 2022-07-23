@@ -97,7 +97,7 @@ rockplat_gfx:
 	LDA .tiles_drawn,y
 	LDY.b #$02
 	; finish oam write
-	JMP.w $01B7BB|!bank
+	JMP.w _finish_oam_write|!bank
 .tiles_drawn:
 	db $04,$08
 warnpc $01B450|!bank

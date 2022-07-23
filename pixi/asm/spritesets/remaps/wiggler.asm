@@ -132,7 +132,7 @@ wiggler_gfx:
 	LDX $15E9|!addr
 	LDA.b #$05
 	LDY.b #$FF
-	JSL.l $01B7B3|!bank
+	JSL.l finish_oam_write|!bank
 ; note: pc needs to be at exactly $02F202 here, fill above ensures this
 warnpc $02F202|!bank
 

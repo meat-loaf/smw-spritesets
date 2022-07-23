@@ -48,24 +48,3 @@ org $02EC72|!bank
 	; empty tile (?)
 	db $05
 warnpc $02EC96|!bank
-
-org $02ED06
-super_koopa:
-	JML.l superkoopa_tile_store|!bank
-	skip 6
-.done
-pullpc
-superkoopa_tile_store:
-	; super koopa tile props
-	LDA.w $02EC96|!bank,x
-	LSR
-	LDA.b #$00
-	BCC.b .tile_on_lo_page
-	LDA.b !tile_off_scratch
-.tile_on_lo_page
-	CLC
-	; super koopatiles
-	ADC.w $02EC72|!bank,x
-	STA.w $0302|!addr,y
-	JML.l super_koopa_done|!bank
-pushpc

@@ -30,8 +30,6 @@ hothead_gfx:
 	BEQ .noblink
 	LDA.b #!blink_eyes_closed_tile
 .noblink:
-	CLC
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	LDA.b #!eye_props
 	ORA.b $64
@@ -56,8 +54,6 @@ hothead_gfx:
 	ORA.b $03
 	TAX
 	LDA.w hothead_tiles|!bank,x
-	CLC
-	ADC.b !tile_off_scratch
 	STA.w $0306|!addr,y
 	LDA.w $02BE9D|!bank,x
 	ORA.b $64
@@ -81,7 +77,7 @@ hothead_gfx:
 
 	LDY.b #$FF
 	LDA.b #$04
-	JSL.l $01B7B3|!bank
+	JSL.l finish_oam_write|!bank
 	RTS
 ; there's a handful of bytes free here now
 warnpc $02BF4C|!bank

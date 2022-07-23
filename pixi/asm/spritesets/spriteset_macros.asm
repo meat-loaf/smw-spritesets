@@ -87,7 +87,3 @@ macro nonstandard_sprset_init(snum_table, off_table, on_wram_mirror, sprset_tabl
   endif
 	<return>
 endmacro
-
-finish_oam_write = $01B7B3
-
-

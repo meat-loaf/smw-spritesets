@@ -8,7 +8,6 @@ volcano_lotus_top_tiles:
 ; the lotus used the 'mushroom scale' sprite gfx routine for
 ; most of its work, for whatever reason, but i reimplemented that
 org $02E00B|!bank
-;	JSR.w $02D394|!bank            ; bank 2's get draw info
 	JSR.w $02E57E|!bank
 	JML.l volcano_lotus_gfx|!bank
 
@@ -19,8 +18,6 @@ volcano_lotus_gfx:
 	    ; this is the tile number for the bottom
 	LDY.w !15EA,x
 	LDA.b #$04
-	CLC
-	ADC.b !tile_off_scratch
 	STA.w $0302|!addr,y
 	STA.w $0306|!addr,y
 	LDA.w $0303|!addr,y
@@ -32,8 +29,6 @@ volcano_lotus_gfx:
 	LDA.w !1602,x
 	TAX
 	LDA.w volcano_lotus_top_tiles,x
-	; CLC
-	ADC.b !tile_off_scratch
 	STA.w $030A|!addr,y
 	INC
 	STA.w $030E|!addr,y

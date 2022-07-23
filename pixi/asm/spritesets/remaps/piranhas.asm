@@ -63,23 +63,3 @@ org $(07F3FE+$1A)|!bank
 org $(07F3FE+$2A)|!bank
 	db $08
 endif
-
-if !remap_jumpin_pplant_vine && !jumpin_pirana_stem_sp0_1
-org $02E114|!bank
-	JSL jumpin_piranha_stem_hijack
-pullpc
-jumpin_piranha_stem_hijack:
-; the jumpin' piranha plant calls the LoadSpriteTables subroutine,
-; which will reload this value before the graphics routine runs in the following frame
-  if !spriteset_off_on_wram_mirror
-	STZ !spriteset_offset,x
-  else
-	LDA #$00
-	STA !spriteset_offset,x
-  endif
-	JML.l $018042|!bank
-pushpc
-else
-org $02E114|!bank
-	JSL.l $018042|!bank
-endif

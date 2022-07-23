@@ -46,14 +46,14 @@ to be remapped.
 	The patch is intended to be used with PIXI, as I believe it to be a reasonable assumption
 that PIXI will be used with the majority of SMW hacks.
 	In PIXI's main.asm, add an incsrc to the spritesets file (if you mirror the directory structure,
-it will be `incsrc spritesets/spritesets.asm` at the top) and look for the 'SetSpriteTables' subroutine.
-Replace the RTL under the `.ret` label with `JML sprset_init' and you should be good to go.
-I would like to find a nicer mechanism to do this automatically, but haven't come up with anything
-I like as of yet. With this setup, though, any changes to spritesets are reapplied on running PIXI.
+it will be `incsrc spritesets/spritesets.asm` at the top), under the other incsrc commands that are there.
+This is all that is required: the spritesets code attempts to avoid running into PIXI code at all. With this
+setup, any changes to spritesets are reapplied on running PIXI.
 	If you don't wish to use PIXI, the patch can be applied independently (and will
-detect if PIXI is installed or not). Just ensure that you add an SA1 detection header and
-that you have PIXI's sa1def.asm file in the same location as the patch if you do this.
-	There is an to use an uberasm (for gamemode 13) to handle the sprite tile uploads
+detect if PIXI is installed or not, with some slightly different code without it). Just
+ensure that you add an SA1 detection header and that you have PIXI's sa1def.asm file in
+the same location as the patch if you do this.
+	There is an to option use an uberasm (for gamemode 13) to handle the sprite tile uploads
 or to hijack LM's code. Using the LM hijack allows you to use the bottom byte of the SP3 file number
 as the spriteset to use. The spriteset used must be defined in a separate table if using uberasm.
 I recommend using the LM hijack. The uberasm is more of a stopgap measure in the event the LM code

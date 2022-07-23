@@ -1,9 +1,5 @@
 * Optimize Mechakoopa GFX routine
-* Optimize Urchin GFX routine
-* Optimize Ball 'n' chain GFX routine
-* Optimize Blargg GFX routine
-* Optimize Hammer brother GFX Routine
-* Optimize Sumo brother GFX Routine
+* Potential Urchin GFX Routine rewrite: toggle for 8x8 eyes?
 * Fix buggy super-koopa
 * Lakitu hardcoded OAM fix (?)
 * Forest bubble implementation

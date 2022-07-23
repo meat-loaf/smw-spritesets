@@ -85,7 +85,7 @@ subspr_gfx0_drawloop:
 	LDX.w $15E9|!addr
 	LDA.b #$03
 	LDY.b #$00
-	JMP.w _finish_oam_write
+	JMP.w _finish_oam_write|!bank
 warnpc $019D5F|!bank
 
 spr_tmap_off = $019C7F|!bank
@@ -301,22 +301,46 @@ load_sprite_tables:
 	AND.b #$0F
 	PLX
 	STA.w !15F6,x
-autoclean \
-	JSL.l sprset_init
+;autoclean \
+;	JSL.l sprset_init
 	BRA load_tweaker_bytes : NOP
 warnpc $07F7A0|!bank
 org $07F7A0|!bank
 load_tweaker_bytes:
 
+
+if !pixi_installed == 1
+org $07F77F|!bank
+sprset_sprload_hijack:
+autoclean \
+	JML.l sprset_init
+	NOP #2
+.done:
+; sadly, pixi hijacks here. so we insert our hijack before it...
+warnpc $07F785|!bank
+else
+org $07F785|!bank
+autoclean \
+	JML.l sprset_init
+endif
+
 freecode
 sprset_init:
+if !pixi_installed == 1
+	STZ.w !1504,x
+	STZ.w !1FD6,x
+else
+	LDA.b #$01
+	STA.w !15A0,x
+endif
+
 	PHY
 	PHX
 
 	LDA.b #spritesets>>16
 	STA.b $8F
 
-if !pixi_installed
+if !pixi_installed == 1
 	LDA   !extra_bits,x
 	AND.b #$08
 	BEQ.b .notcustom
@@ -343,7 +367,12 @@ endif
 	PLX
 	STA   !spriteset_offset,x
 	PLY
+if !pixi_installed == 1
+	JML.l sprset_sprload_hijack_done
+else
 	RTL
+endif
+
 if !cluster_sprites_inherit_parent
 sprset_cluster_init_inherit:
 	STA $1892|!addr,x

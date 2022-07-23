@@ -64,6 +64,6 @@ chainsaw_gfx:
 	LDY.b #$02
 	; sneaky way to save a byte and a cycle; from the original
 	TYA
-	JSL.l $01B7B3|!bank
+	JSL.l finish_oam_write|!bank
 	RTS
 warnpc $03C2D9|!bank
