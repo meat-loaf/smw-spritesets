@@ -10,8 +10,7 @@ incsrc "finish_oam_write.asm"
 org $0096F8|!bank
 ss_hijack:
 if !hijack_lm_code == 0
-        ; original music upload routine
-	JSR.w $008134|!bank
+	skip 3
 autoclean \
 	JML.l spriteset_setup_nolm|!bank
 	warnpc $009705|!bank
@@ -19,12 +18,11 @@ else
 	JML.l ss_set_spriteset|!bank
 	NOP #6
 .done:
-	JSR.w $008134|!bank
 warnpc $009705|!bank
 
-if read1($0FF8C6|!bank) != $22
+  if read1($0FF8C6|!bank) != $22
 	error "LM Super GFX hijack not installed, or this code has changed. Install this hijack first before patching with LM hijacks."
-else
+  else
 	!exgfx_table #= read3($0FF7FF)
 endif
 ; orignally, a call to the LM code that decompresses graphics files after
@@ -265,10 +263,6 @@ mexsprite_spawn_bank2:
 %altsprite_spawn($17F0|!addr,!mex_spriteset_offset, \
                  !minorextended_sprites_inherit_parent, "!spriteset_offset,x", \
                  !mex_off_on_wram_mirror,mex_sprset_init|!bank, RTS)
-;bounce_spawn_bank2:
-;	STA.w $1699|!addr,x
-;	
-;	RTS
 warnpc $02D580|!bank
 
 ;; bank 03 freespace
@@ -310,6 +304,7 @@ if !pixi_installed == 1
 else
 	LDA.b #$01
 	STA.w !15A0,x
+	PHP
 endif
 
 	PHY
@@ -346,6 +341,7 @@ endif
 	STA   !spriteset_offset,x
 	PLY
 if !pixi_installed == 1
+	PLP
 	JML.l sprset_sprload_hijack_done
 else
 	RTL
